@@ -9,3 +9,12 @@ plugins/
 tasks
 test
 package-lock.json
+
+# waistline-cli
+brag-output/
+graphify-out/
+*.stackdump
+keys/
+*.jks
+*.keystore
+release-signing.json
