@@ -8,8 +8,10 @@ gráficas se sustituyeron por una terminal. Ambos son software libre bajo la GPL
 
 [Read in English](README.md) · README de Waistline original: [README.waistline.md](README.waistline.md)
 
-> **Estado: 0.1.0, primera versión.** Funciona en un móvil Android real (se comprobaron el escaneo, la exportación e importación, el
-> recordatorio y el icono), pero es joven: habrá aristas. Haz copias de seguridad (`export`).
+> **Estado: 0.1.1, versión temprana.** La 0.1.0 se comprobó en un móvil Android real (escaneo, exportación e importación,
+> recordatorio e icono). La 0.1.1 trae de serie los campos de la báscula (músculo, agua, hueso, bmr) y calcula el gasto del día con
+> la actividad de tu reloj más el bmr de tu báscula; se comprobó en un navegador y con las pruebas automáticas, todavía no en un
+> móvil. Habrá aristas: haz copias de seguridad (`export`).
 
 ## Ideas que lo definen
 

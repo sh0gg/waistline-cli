@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waist.line.terminal" version="0.1.0" android:versionCode="100" xmlns:android="http://schemas.android.com/apk/res/android" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.waist.line.terminal" version="0.1.1" android:versionCode="101" xmlns:android="http://schemas.android.com/apk/res/android" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>waistline-cli</name>
     <description>
         waistline-cli: a terminal-style food and weight diary. A fork of Waistline (David Healey) created by sh0gg_. Libre, GPLv3.

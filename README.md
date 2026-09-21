@@ -8,8 +8,10 @@ graphical screens were replaced by a terminal. Both are free software under the 
 
 [Leer en español](README.es.md) · Original Waistline README: [README.waistline.md](README.waistline.md)
 
-> **Status: 0.1.0, first version.** It works on a real Android phone (scan, export/import, reminder and icon were checked), but it
-> is young: expect rough edges, and please keep backups (`export`).
+> **Status: 0.1.1, early version.** 0.1.0 was checked on a real Android phone (scan, export/import, reminder and icon). 0.1.1 adds
+> the scale fields (muscle, water, bone, bmr) out of the box and works out the day's energy from your watch's activity plus your
+> scale's bmr; it was checked in a browser and with the automated tests, not yet on a phone. Expect rough edges, and please keep
+> backups (`export`).
 
 ## A taste of it
 
