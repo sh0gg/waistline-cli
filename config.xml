@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.waist.line" version="3.11.1" android:versionCode="31101" xmlns:android="http://schemas.android.com/apk/res/android" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Waistline</name>
+<widget id="com.waist.line.terminal" version="0.1.0" android:versionCode="100" xmlns:android="http://schemas.android.com/apk/res/android" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>waistline-cli</name>
     <description>
-        A libre calorie counter including a barcode scanner linked to the Open Food Facts database.
+        waistline-cli: a terminal-style food and weight diary. A fork of Waistline (David Healey) created by sh0gg_. Libre, GPLv3.
     </description>
     <author email="dave41264@hotmail.com" href="">
         David Healey
@@ -36,8 +36,8 @@
         <icon density="xhdpi" background="res/icon/android/xhdpi-background.png" foreground="res/icon/android/xhdpi-foreground.png" monochrome="res/icon/android/xhdpi-monochrome.png" src="res/android/xhdpi.png" />
         <icon density="xxhdpi" background="res/icon/android/xxhdpi-background.png" foreground="res/icon/android/xxhdpi-foreground.png" monochrome="res/icon/android/xxhdpi-monochrome.png" src="res/android/xxhdpi.png" />
         <icon density="xxxhdpi" background="res/icon/android/xxxhdpi-background.png" foreground="res/icon/android/xxxhdpi-foreground.png" monochrome="res/icon/android/xxxhdpi-monochrome.png" src="res/android/xxxhdpi.png" />
-        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screen/android/splashscreen.xml" />
-        <preference name="AndroidWindowSplashScreenBackground" value="#973939" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/screen/android/splash-icon.png" />
+        <preference name="AndroidWindowSplashScreenBackground" value="#111116" />
     </platform>
     <platform name="electron">
         <preference name="ElectronSettingsFilePath" value="res/electron/settings.json" />
