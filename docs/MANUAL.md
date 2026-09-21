@@ -3,7 +3,7 @@
 > waistline-cli is a fork of [Waistline](https://github.com/davidhealey/waistline) (by David Healey) created by **sh0gg**. Both are free software under the GPLv3.
 > [Leer en español](MANUAL.es.md) · [Back to the README](../README.md)
 
-This manual explains how to use the app, with use cases, and how to work on the code. Reference version: **0.1.0**.
+This manual explains how to use the app, with use cases, and how to work on the code. Reference version: **0.1.1** (the scale fields out of the box and the energy from `active` in `stats` arrive in this version).
 Inside the app, `help` lists the commands and `tour` walks you through the first steps.
 
 **Contents:** [1. What it is](#1-what-it-is) · [2. First start](#2-first-start) · [3. Moving around](#3-moving-around-folders-and-shell) ·
@@ -37,7 +37,7 @@ Commands and options are **always in English**; the text around them can be show
 ## 2. First start
 
 1. A few preference questions appear (`setup`): units, first day of the week, meal names.
-2. Then the guided `tour` list: profile, weight, calorie goal, first food, first meal, reminder and a walk through the
+2. Then the guided `tour` list: profile, weight, calorie goal, first food, first meal, reminder, your watch's energy (if you have one) and a walk through the
    folders. Each item runs the real command and is ticked `[x]` by looking at what is **stored**, not at what you say.
    `tour` brings it back.
 3. A fresh install **starts empty**, goals included.
@@ -273,7 +273,11 @@ rm 2026-09-18 water            # remove a measurement (undo brings it back)
 fields    field show "body fat"    field add water %    field hide "body fat"
 ```
 
-- By default only weight is asked; `fields` lists the fields. Hiding a field **does not delete** its values.
+- **Out of the box** these are asked: `weight`, `body fat`, `muscle`, `water`, `bone` (those three and `body fat` in %) and
+  `bmr` (kcal), which is what body composition scales usually report. `neck`, `waist` and `hips` (tape) exist but are hidden.
+  `fields` lists them, `field show <name>` / `field hide <name>` change which are asked and `field add <name> [unit]`
+  creates a new one. Hiding a field **does not delete** its values. On an install from before 0.1.1 the missing ones are
+  added on update, without touching your values or anything you had hidden.
 - **Warnings about possible mistakes** before saving: out-of-range values (weight 25–300 kg, %, BMR 700–4500), jumps of
   more than 1.5 kg from one day to the next, fat + muscle + bone above 100 %, inconsistent water, BMR outside 14–34
   kcal/kg. You decide: `y` keeps it, another value replaces it, Enter leaves it empty. A `742` for `74.2` is **suggested
@@ -288,7 +292,7 @@ fields and **they are not the same**:
 | Field | What it is | Create |
 |---|---|---|
 | `burned` | **total** energy of the day (basal + activity) | `field add burned kcal` |
-| `active` | **activity** only | `field add active kcal` |
+| `active` | **activity** only (needs the scale's `bmr` of the same day to make a total) | `field add active kcal` |
 
 **Which one is yours?** It depends on how your watch labels its number. Total energy includes the basal metabolism (about
 60–90 kcal an hour even at rest, 1,400–2,200 kcal a day); active energy only rises when you move. Two checks:
@@ -298,7 +302,7 @@ fields and **they are not the same**:
 
 **Do not enter the wrong field.** Active calories entered as `burned` make `plan` believe you burn much less than you do.
 
-How to enter it:
+`tour` offers it and explains the difference. How to enter it:
 
 ```
 field add active kcal
@@ -310,6 +314,9 @@ weight active 802 @yesterday  # another day
   with `@yesterday`), not a half-way reading.
 - One day of data breaks nothing: `plan` only uses `watch` from 3 days on, and charts leave gaps. The warnings accept
   `active` between 10 and 3,500 kcal and `burned` between 700 and 4,500.
+- **`stats` uses one or the other, never both mixed:** with `burned`, the day's energy is that number; without it, with
+  `active`, a day's energy is `bmr + active` **of the same day**. A day without `bmr` (or without `active`) stays empty, it
+  is not filled from another day. The overview, `stats energy`, `stats balance` and `stats weeks` say which one they use.
 
 ---
 
@@ -380,7 +387,7 @@ stats                    # dashboard with mini charts (tap a row to open its cha
 stats weight 90d         # also fat, muscle, water, bmr, burned, active or your own fields
 stats intake             # intake as bars with the goal line
 stats protein
-stats energy             # intake vs the watch's energy
+stats energy             # intake vs energy spent (burned, or bmr + active)
 stats balance            # intake − energy (green = deficit, red = surplus)
 stats composition        # fat mass and lean mass in kg
 stats weeks 8            # week-by-week table

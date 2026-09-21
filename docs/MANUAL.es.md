@@ -3,7 +3,7 @@
 > waistline-cli es un fork de [Waistline](https://github.com/davidhealey/waistline) (de David Healey) creado por **sh0gg**. Ambos son software libre bajo GPLv3.
 > [Read in English](MANUAL.md) · [Volver al README](../README.es.md)
 
-Este manual explica cómo usar la app, con casos de uso, y cómo trabajar en el código. Versión de referencia: **0.1.0**.
+Este manual explica cómo usar la app, con casos de uso, y cómo trabajar en el código. Versión de referencia: **0.1.1** (los campos de báscula de serie y el gasto con `active` en `stats` llegan en esta versión).
 Dentro de la app, `help` lista los comandos y `tour` te guía en los primeros pasos.
 
 **Índice:** [1. Qué es](#1-qué-es) · [2. Primer arranque](#2-primer-arranque) · [3. Moverse](#3-moverse-carpetas-y-shell) ·
@@ -38,7 +38,7 @@ Los comandos y opciones están **siempre en inglés**; el texto de alrededor pue
 
 1. Salen unas preguntas de preferencias (`setup`): unidades, primer día de la semana, nombres de comidas.
 2. Después aparece la lista guiada `tour`: perfil, peso, objetivo de calorías, primer alimento, primera comida,
-   recordatorio y un recorrido por las carpetas. Cada punto ejecuta el comando real y se marca `[x]` mirando lo que hay
+   recordatorio, el gasto de tu reloj (si tienes uno) y un recorrido por las carpetas. Cada punto ejecuta el comando real y se marca `[x]` mirando lo que hay
    **guardado**, no lo que dices. `tour` la vuelve a mostrar.
 3. Una instalación nueva **empieza vacía**, también sin objetivos.
 4. ¿Ya usabas Waistline? Haz una copia con la app oficial y usa `import` (ver §9).
@@ -273,7 +273,11 @@ rm 2026-09-18 water            # quitar una medida (undo la recupera)
 fields    field show "body fat"    field add water %    field hide "body fat"
 ```
 
-- Por defecto solo se pregunta el peso; `fields` lista los campos. Ocultar un campo **no borra** sus valores.
+- **De serie** se preguntan `weight`, `body fat`, `muscle`, `water`, `bone` (los tres últimos y `body fat` en %) y `bmr` (kcal),
+  que es lo que suelen dar las básculas de bioimpedancia. `neck`, `waist` y `hips` (cinta) existen pero están ocultos.
+  `fields` los lista, `field show <nombre>` / `field hide <nombre>` cambian cuáles se preguntan y `field add <nombre> [unidad]`
+  crea uno nuevo. Ocultar un campo **no borra** sus valores. En una instalación anterior a la 0.1.1 los que faltan se añaden
+  solos al actualizar, sin tocar tus valores ni lo que hubieras ocultado.
 - **Avisos de posibles errores** antes de guardar: valores fuera de rango (peso 25–300 kg, %, BMR 700–4500), saltos de
   más de 1,5 kg de un día a otro, grasa + músculo + huesos > 100 %, agua incoherente, BMR fuera de 14–34 kcal/kg.
   Decides tú: `y` mantiene, otro valor lo cambia, Enter lo deja vacío. Un `742` por `74.2` se **sugiere pero no se aplica**.
@@ -286,7 +290,7 @@ No hay conexión automática con relojes: el gasto lo anotas tú, en un campo pr
 | Campo | Qué es | Crear |
 |---|---|---|
 | `burned` | gasto **total** del día (basal + actividad) | `field add burned kcal` |
-| `active` | solo la **actividad** | `field add active kcal` |
+| `active` | solo la **actividad** (necesita el `bmr` de la báscula del mismo día para dar un total) | `field add active kcal` |
 
 **¿Cuál es el tuyo?** Depende de cómo rotule el reloj su número. El gasto total incluye el metabolismo basal (unas 60–90
 kcal por hora incluso en reposo, 1.400–2.200 kcal al día); las activas solo suben cuando te mueves. Dos comprobaciones:
@@ -296,7 +300,7 @@ kcal por hora incluso en reposo, 1.400–2.200 kcal al día); las activas solo s
 
 **No anotes el campo equivocado.** Unas activas metidas como `burned` hacen que `plan` crea que gastas mucho menos de lo real.
 
-Cómo anotarlo:
+`tour` te lo ofrece y te explica la diferencia. Cómo anotarlo:
 
 ```
 field add active kcal
@@ -308,6 +312,9 @@ weight active 802 @yesterday  # otro día
   noche o con `@yesterday`), no una lectura a medias.
 - Con un solo día de datos no se rompe nada: `plan` solo usa `watch` desde 3 días y las gráficas dejan huecos. Los
   avisos aceptan `active` entre 10 y 3.500 kcal y `burned` entre 700 y 4.500.
+- **`stats` usa uno u otro, nunca los mezcla:** con `burned`, el gasto es ese número; sin él, con `active`, el gasto de un
+  día es `bmr + active` **del mismo día**. Un día sin `bmr` (o sin `active`) queda vacío, no se rellena con otro día. El
+  panel, `stats energy`, `stats balance` y `stats weeks` dicen de cuál de los dos salen.
 
 ---
 
@@ -378,7 +385,7 @@ stats                    # panel con mini-gráficas (tocar una fila abre su grá
 stats weight 90d         # también fat, muscle, water, bmr, burned, active o campos propios
 stats intake             # ingesta en barras con línea de objetivo
 stats protein
-stats energy             # ingesta vs gasto del reloj
+stats energy             # ingesta vs gasto (burned, o bmr + active)
 stats balance            # ingesta − gasto (verde = déficit, rojo = superávit)
 stats composition        # masa grasa y magra en kg
 stats weeks 8            # tabla semanal
