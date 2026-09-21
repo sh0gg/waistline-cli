@@ -107,6 +107,39 @@ app.TerminalStats = {
       .map(p => ({ iso: p.iso, value: b.toDisplay(field, p.value) }));
   },
 
+  // What each day spent, from the watch. Either its own daily total (burned), or, when all you enter is its
+  // activity energy, that plus the scale's resting rate of the SAME day: a day without both is left out, never
+  // filled in from another day. The two are never mixed in one series. Returns { points, source, label, ... }
+  spent: async function(from, to) {
+    const burnedField = this.role("burned");
+    const activeField = this.role("active");
+    const bmrField = this.role("bmr");
+
+    const burned = await this.points(burnedField, from, to);
+    if (burned.length > 0)
+      return { points: burned, source: "burned", label: "burned (watch)", key: burnedField.name, note: "days from the watch", has: true };
+
+    const active = await this.points(activeField, from, to);
+    const bmr = await this.points(bmrField, from, to);
+    const points = active
+      .filter(a => bmr.some(x => x.iso === a.iso))
+      .map(a => ({ iso: a.iso, value: bmr.find(x => x.iso === a.iso).value + a.value }));
+    if (points.length > 0)
+      return { points: points, source: "bmr+active", label: "spent (bmr + activity)", key: activeField.name, note: "days of scale bmr + the watch's activity", has: true };
+
+    // Nothing to draw: say what is missing, so the message points at the right field
+    let why;
+    if (!burnedField && !activeField)
+      why = "no watch energy entered in this range. add it with: field add burned kcal (the day's total) or field add active kcal (its activity only, which adds your scale's bmr), then weight";
+    else if (activeField && !burnedField && !bmrField)
+      why = "the watch's activity energy needs your scale's resting rate to make a day's total. add it with: field add bmr kcal, then weight";
+    else if (activeField && !burnedField && active.length > 0)
+      why = "no day in this range has both the watch's activity energy and your scale's bmr";
+    else
+      why = "no watch energy entered in this range";
+    return { points: [], source: undefined, label: "", why: why, has: false };
+  },
+
   // Every day's intake in a range: [{ iso, kcal, protein, fat, carbs, logged }]. A day is "logged" from 1,000 kcal;
   // one with less is drawn light and left out of averages, as it is probably a day that was not finished.
   daily: async function(from, to) {
@@ -288,16 +321,16 @@ app.TerminalStats = {
     }
 
     // What the watch says you spent, and the balance on days with both
-    const burnedField = this.role("burned");
-    const burned = await this.points(burnedField, range.from, range.to);
+    const spent = await this.spent(range.from, range.to);
+    const burned = spent.points;
     if (burned.length > 0) {
       add({
-        key: burnedField.name,
-        label: "burned",
+        key: spent.key,
+        label: spent.source === "burned" ? "burned" : "spent",
         value: this.fmtE(this.mean(burned.map(p => p.value))) + "/day",
         change: "",
         spark: charts.spark(this.perDay(burned, range.from, range.to), 28, 0),
-        note: burned.length + " days from the watch",
+        note: burned.length + " " + spent.note,
         color: "var(--t-green)"
       });
 
@@ -311,7 +344,7 @@ app.TerminalStats = {
           value: this.sign(avgBalance) + this.fmtE(Math.abs(avgBalance)).replace(/ .*/, "") + " " + this.eUnit() + "/day",
           change: "",
           spark: charts.spark(this.perDay(both.map((x, i) => ({ iso: x.iso, value: balances[i] })), range.from, range.to)),
-          note: "intake minus the watch, on " + both.length + " days that have both",
+          note: spent.source === "burned" ? "intake minus the watch, on " + both.length + " days that have both" : "intake minus bmr + activity, on " + both.length + " days that have both",
           color: avgBalance <= 0 ? "var(--t-green)" : "var(--t-red)"
         });
       }
@@ -454,18 +487,18 @@ app.TerminalStats = {
     const t = app.Terminal;
     const d = app.TerminalDiary;
     const days = await this.daily(range.from, range.to);
-    const burnedField = this.role("burned");
-    const burned = await this.points(burnedField, range.from, range.to);
+    const spent = await this.spent(range.from, range.to);
+    const burned = spent.points;
 
     const bars = days.map(x => ({ iso: x.iso, value: this.e(x.kcal), light: !x.logged || x.iso === range.to }));
     const series = [{ name: "intake", kind: "bars", color: "var(--t-accent)", points: bars }];
     if (burned.length > 0)
-      series.push({ name: "burned (watch)", kind: "line", color: "var(--t-green)", points: burned.map(p => ({ iso: p.iso, value: this.e(p.value) })), dots: true, maxGap: 1 }); // a day without it is a day not worn: no line across
+      series.push({ name: spent.label, kind: "line", color: "var(--t-green)", points: burned.map(p => ({ iso: p.iso, value: this.e(p.value) })), dots: true, maxGap: 1 }); // a day without it is a day not worn: no line across
 
     t.printNode(app.TerminalCharts.chart({ title: "energy: eaten and spent (" + this.eUnit() + " a day)", subtitle: range.from + " → " + range.to, from: range.from, to: range.to, decimals: 0, series: series }), true);
 
     if (burned.length === 0) {
-      t.print("no watch energy entered in this range. add it with: field add burned kcal, then weight", "muted");
+      t.print(spent.why, "muted");
       return;
     }
 
@@ -477,14 +510,23 @@ app.TerminalStats = {
 
     const balances = both.map(x => x.kcal - burned.find(p => p.iso === x.iso).value);
     const avg = this.mean(balances);
-    t.print("on the " + both.length + " days with both: intake minus the watch averages " + this.sign(avg) + this.fmtE(Math.abs(avg)) + " a day. stats balance draws it day by day", "muted");
+    if (spent.source === "burned")
+      t.print("on the " + both.length + " days with both: intake minus the watch averages " + this.sign(avg) + this.fmtE(Math.abs(avg)) + " a day. stats balance draws it day by day", "muted");
+    else
+      t.print("on the " + both.length + " days with both: intake minus bmr + activity averages " + this.sign(avg) + this.fmtE(Math.abs(avg)) + " a day. stats balance draws it day by day", "muted");
   },
 
   balanceChart: async function(range) {
     const t = app.Terminal;
     const days = await this.daily(range.from, range.to);
-    const burned = await this.points(this.role("burned"), range.from, range.to);
+    const spent = await this.spent(range.from, range.to);
+    const burned = spent.points;
     const both = days.filter(x => x.logged && x.iso < range.to && burned.some(p => p.iso === x.iso));
+
+    if (burned.length === 0) {
+      t.print(spent.why, "muted");
+      return;
+    }
 
     if (both.length === 0) {
       t.print("no day has both a finished intake and the watch's energy in this range", "muted");
@@ -499,7 +541,7 @@ app.TerminalStats = {
     });
 
     t.printNode(app.TerminalCharts.chart({
-      title: "balance: intake minus the watch (" + this.eUnit() + ")",
+      title: spent.source === "burned" ? "balance: intake minus the watch (" + this.eUnit() + ")" : "balance: intake minus bmr + activity (" + this.eUnit() + ")",
       subtitle: range.from + " → " + range.to + " · only days with both",
       from: range.from, to: range.to, decimals: 0,
       series: [{ name: "deficit", kind: "bars", color: "var(--t-green)", points: deficit }, { name: "surplus", kind: "bars", color: "var(--t-red)", points: surplus }]
@@ -575,7 +617,8 @@ app.TerminalStats = {
 
     const days = await this.daily(from, today);
     const weight = await this.points(this.role("weight"), from, today);
-    const burned = await this.points(this.role("burned"), from, today);
+    const spent = await this.spent(from, today);
+    const burned = spent.points;
 
     t.print("week of    weight   change   intake  burned  balance  logged", "muted");
     let previous;
@@ -613,6 +656,8 @@ app.TerminalStats = {
     }
 
     t.print("weights and averages count only days you entered. intake counts finished days. " + this.eUnit() + " a day", "muted");
+    if (spent.source === "bmr+active")
+      t.print("burned here is your scale's bmr + the watch's activity, on the days that have both", "muted");
   },
 
   // ---------------------------------------------------------------------
