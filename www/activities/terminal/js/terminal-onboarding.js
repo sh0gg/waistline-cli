@@ -49,6 +49,15 @@ app.TerminalOnboarding = {
     const foods = await app.TerminalFoods.allFoods();
     const days = await dbHandler.getAllItems("diary");
 
+    // The watch's energy: done once a reading of either kind is stored
+    const body = app.TerminalBody;
+    const watchField = (role) => body.fields().find(f => body.role(f.name) === role);
+    let watchReadings = 0;
+    for (const role of ["burned", "active"]) {
+      const field = watchField(role);
+      if (field) watchReadings += (await body.series(field.name)).length;
+    }
+
     return [
       {
         text: "your profile: height, birth date, sex, activity (only for the plan's formula; every field is optional)",
@@ -98,6 +107,29 @@ app.TerminalOnboarding = {
           t.ask("what time? e.g. 07:00 (Enter skips)", async (line) => {
             if (line === "") return;
             await t.run("set reminder " + line);
+          }, { blank: true });
+        }
+      },
+      {
+        text: "your watch's daily energy, if you have a watch: its total for the day, or only its activity",
+        done: watchReadings > 0,
+        optional: true,
+        run: async () => {
+          t.print("which one your watch shows matters. a day's total includes your resting energy, so it is already high before you have moved; activity only counts movement", "muted");
+          t.print("activity entered as a total makes plan think you burn far less than you do. to tell them apart, look at the number first thing in the morning: hundreds already means total, close to 0 means activity", "muted");
+          t.ask("which is it: total or activity (Enter skips)", async (line) => {
+            const answer = line.trim().toLowerCase();
+            if (answer === "") return;
+
+            const role = answer.startsWith("t") ? "burned" : answer.startsWith("a") ? "active" : "";
+            if (role === "") {
+              t.print("type total or activity", "err");
+              return;
+            }
+
+            if (!watchField(role)) await t.run("field add " + role + " kcal");
+            t.print("enter each finished day with weight, e.g.  weight " + role + " 802 @yesterday  (a day counts once it is over)", "muted");
+            if (role === "active") t.print("activity needs your scale's bmr on the same day to make a total, so enter bmr too when you weigh yourself", "muted");
           }, { blank: true });
         }
       },
