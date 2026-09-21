@@ -19,7 +19,7 @@
 
 // After a breaking change to the settings schema, increment this constant
 // and implement the migration in the migrateSettings() function below
-const currentSettingsSchemaVersion = 9;
+const currentSettingsSchemaVersion = 10;
 
 app.Settings = {
 
@@ -317,7 +317,7 @@ app.Settings = {
         units: {}
       },
       bodyStats: {
-        order: app.bodyStats,
+        order: app.bodyStats.concat(app.scaleStats),
         units: {}
       },
       nutrimentVisibility: {
@@ -329,7 +329,12 @@ app.Settings = {
         "salt": true
       },
       bodyStatsVisibility: {
-        "weight": true
+        "weight": true,
+        "body fat": true,
+        "muscle": true,
+        "water": true,
+        "bone": true,
+        "bmr": true
       },
       integration: {
         "barcode-flashlight": false,
@@ -424,6 +429,19 @@ app.Settings = {
             }
           }
         }
+      }
+
+      // The scale fields (muscle, water, bone, bmr) are added, and shown, only where they are missing. A field
+      // that already exists keeps whatever visibility it had, and no measurement is touched
+      if (settings.bodyStats !== undefined && settings.bodyStats.order !== undefined) {
+        if (settings.bodyStatsVisibility === undefined)
+          settings.bodyStatsVisibility = {};
+        app.scaleStats.forEach((x) => {
+          if (!settings.bodyStats.order.includes(x)) {
+            settings.bodyStats.order.push(x);
+            settings.bodyStatsVisibility[x] = true;
+          }
+        });
       }
 
       // "last-stat" from localStorage must be migrated to settings
