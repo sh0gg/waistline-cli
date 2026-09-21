@@ -1,0 +1,50 @@
+<!--
+  Copyright 2018, 2019, 2020, 2021 David Healey
+  This version, waistline-cli, is a fork of Waistline created by sh0gg_.
+
+  This file is part of Waistline.
+
+  Waistline is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Waistline is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with Waistline.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="page no-swipeback" data-name="terminal">
+
+  <div class="navbar">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner">
+      <div class="title term-title"><span class="term-title-name">waistline</span>-cli</div>
+      <div class="right">
+        <!-- Panic button. Deliberately does not use app.Terminal: it must work even if the terminal is broken.
+             It does what the reset command does (clears the screen, history and location, goes home), never your data. -->
+        <a href="#" class="link icon-only term-reset" title="reset" aria-label="reset"
+          onclick="try { ['terminal-log', 'terminal-history', 'terminal-cwd'].forEach(function(k) { window.localStorage.removeItem(k); }); } catch (e) {} window.location.reload(); return false;">
+          <i class="icon material-icons">restart_alt</i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content terminal-page">
+    <div id="term-out" class="term-out"></div>
+
+    <form id="term-form" class="term-input-row" autocomplete="off">
+      <span class="term-prompt"><span class="term-cwd">~</span> <span class="term-dollar">$</span></span>
+      <div class="term-input-wrap">
+        <div class="term-ghost" aria-hidden="true"><span class="term-ghost-typed"></span><span class="term-caret"></span><span class="term-ghost-after"></span><span class="term-ghost-hint"></span></div>
+        <input id="term-input" type="text" enterkeyhint="send" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" aria-label="command">
+      </div>
+      <button id="term-tab" type="button" class="term-tab" aria-label="autocomplete">&#8677;</button>
+      <button id="term-send" type="button" class="term-tab term-send" aria-label="send">&#9166;</button>
+    </form>
+  </div>
+</div>

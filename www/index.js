@@ -124,7 +124,6 @@ const app = {
   },
 
   setRtlWritingDirection: function() {
-    $("#app-panel").get(0).classList.replace("panel-left", "panel-right");
     $("#framework7").get(0).setAttribute("href", "assets/framework7/framework7-bundle-rtl.min.css");
     $("html").get(0).setAttribute("dir", "rtl");
   },
@@ -137,11 +136,6 @@ const app = {
     // App id
     id: "com.waist.line",
     version: "2.9.2",
-    // Enable swipe panel
-    panel: {
-      swipe: true,
-      swipeActiveArea: 30,
-    },
     calendar: {
       url: 'calendar/',
       dateFormat: 'dd.mm.yyyy',
@@ -152,253 +146,10 @@ const app = {
     },
     // Add default routes
     routes: [{
-        name: "Statistics",
-        path: "/statistics/",
-        url: "activities/statistics/views/statistics.html"
-      },
-      {
-        name: "Diary",
-        path: "/diary/",
-        url: "activities/diary/views/diary.html",
-        routes: [{
-          name: "Chart",
-          path: "/chart/",
-          url: "activities/diary/views/diary-chart.html",
-          options: {
-            transition: "f7-parallax"
-          }
-        }]
-      },
-      {
-        name: "Foods, Meals, Recipes",
-        path: "/foods-meals-recipes/",
-        url: "activities/foods-meals-recipes/views/foods-meals-recipes.html",
-        tabs: [{
-            path: '/',
-            id: 'foodlist',
-            url: 'activities/foodlist/views/foodlist.html',
-          },
-          {
-            path: '/recipes/',
-            id: 'recipes',
-            url: 'activities/recipes/views/recipes.html'
-          },
-          {
-            path: '/meals/',
-            id: 'meals',
-            url: 'activities/meals/views/meals.html'
-          }
-        ],
-        routes: [{
-            name: "Food Editor",
-            path: "/food-editor/",
-            url: "activities/foods-meals-recipes/views/food-editor.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Meal Editor",
-            path: "/meal-editor/",
-            url: "activities/meals/views/meal-editor.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Recipe Editor",
-            path: "/recipe-editor/",
-            url: "activities/recipes/views/recipe-editor.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          }
-        ]
-      },
-      {
-        name: "Settings",
-        path: "/settings/",
-        url: "activities/settings/views/settings.html",
-        routes: [{
-            path: "appearance/",
-            url: "activities/settings/views/appearance.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "statistics/",
-            url: "activities/settings/views/statistics.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "diary/",
-            url: "activities/settings/views/diary.html",
-            options: {
-              transition: "f7-parallax"
-            },
-            routes: [{
-              path: "meal-names/",
-              url: "activities/settings/views/diary-meal-names.html",
-              options: {
-                transition: "f7-parallax"
-              },
-            }]
-          },
-          {
-            path: "foods/",
-            url: "activities/settings/views/foods.html",
-            options: {
-              transition: "f7-parallax"
-            },
-            routes: [{
-              path: "categories/",
-              url: "activities/settings/views/foods-categories.html",
-              options: {
-                transition: "f7-parallax"
-              },
-            }]
-          },
-          {
-            path: "goals/",
-            url: "activities/settings/views/goals.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },,
-          {
-            path: "units/",
-            url: "activities/settings/views/units.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "nutriments/",
-            url: "activities/settings/views/nutriments.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "body-stats/",
-            url: "activities/settings/views/body-stats.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "integration/",
-            url: "activities/settings/views/integration.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "text-to-speech/",
-            url: "activities/settings/views/text-to-speech.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "import-export/",
-            url: "activities/settings/views/import-export.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            path: "developer/",
-            url: "activities/settings/views/developer.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          }
-        ]
-      },
-      {
-        name: "Goals",
-        path: "/goals/",
-        url: "activities/goals/views/goals.html",
-        routes: [{
-          name: "Goal Editor",
-          path: "/goal-editor/",
-          url: "activities/goals/views/goal-editor.html",
-          options: {
-            transition: "f7-parallax"
-          }
-        }]
-      },
-      {
-        name: "About",
-        path: "/about/",
-        url: "activities/about/views/about.html"
-      },
-      {
-        name: "Setup Wizard",
-        path: "/setup-wizard/",
-        url: "activities/setup-wizard/views/setup-wizard.html",
-        routes: [{
-            name: "Setup Wizard Target Weight",
-            path: "/target-weight/",
-            url: "activities/setup-wizard/views/setup-wizard-target-weight.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Setup Wizard Current Weight",
-            path: "/current-weight/",
-            url: "activities/setup-wizard/views/setup-wizard-current-weight.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Setup Wizard Height",
-            path: "/height/",
-            url: "activities/setup-wizard/views/setup-wizard-height.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Setup Wizard DOB",
-            path: "/dob/",
-            url: "activities/setup-wizard/views/setup-wizard-dob.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Setup Wizard Gender",
-            path: "/gender/",
-            url: "activities/setup-wizard/views/setup-wizard-gender.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Setup Wizard Activity Level",
-            path: "/activity-level/",
-            url: "activities/setup-wizard/views/setup-wizard-activity-level.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          },
-          {
-            name: "Summary",
-            path: "/summary/",
-            url: "activities/setup-wizard/views/setup-wizard-summary.html",
-            options: {
-              transition: "f7-parallax"
-            }
-          }
-        ]
-      },
+      name: "Terminal",
+      path: "/terminal/",
+      url: "activities/terminal/views/terminal.html"
+    }
     ]
   })
 };
@@ -423,34 +174,6 @@ if (rtl)
   app.setRtlWritingDirection();
 
 const mainView = app.f7.views.create("#main-view", viewOptions);
-
-let enableDisableSwipe = function(panel) {
-  let pageName = app.f7.views.main.router.currentRoute.name || "";
-  let history = app.f7.views.main.router.history || [];
-
-  if (pageName.includes("Editor"))
-    panel.disableSwipe();
-  else if (pageName == "Chart")
-    panel.disableSwipe();
-  else if (pageName == "Foods, Meals, Recipes" && history.includes("/diary/"))
-    panel.disableSwipe();
-  else
-    panel.enableSwipe();
-};
-
-document.addEventListener("page:init", function(event) {
-  let panel = app.f7.panel.get("#app-panel");
-  enableDisableSwipe(panel);
-
-  // Close panel when switching pages
-  if (panel)
-    panel.close(animate);
-});
-
-document.addEventListener("page:reinit", function(event) {
-  let panel = app.f7.panel.get("#app-panel");
-  enableDisableSwipe(panel);
-});
 
 app.f7.on("init", async function(event) {});
 
@@ -496,11 +219,12 @@ document.addEventListener("deviceready", async function() {
 
   if (settings == undefined || settings.firstTimeSetup == undefined) {
     app.Settings.firstTimeSetup();
-    app.f7.views.main.router.navigate("/settings/");
+    try { window.localStorage.setItem("terminal-first-run", "1"); } catch (err) {}
+    app.f7.views.main.router.navigate("/terminal/");
   } else {
     settings = app.Settings.migrateSettings(settings);
     app.Settings.changeTheme(settings.appearance.mode, settings.appearance.theme);
-    app.f7.views.main.router.navigate(settings.appearance["start-page"]);
+    app.f7.views.main.router.navigate("/terminal/");
   }
 
   triggerAutoBackup();

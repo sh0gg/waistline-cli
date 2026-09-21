@@ -1,0 +1,357 @@
+/*
+  Copyright 2018, 2019, 2020, 2021 David Healey
+  This version, waistline-cli, is a fork of Waistline created by sh0gg_.
+
+  This file is part of Waistline.
+
+  Waistline is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Waistline is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with app.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* Terminal colour theme: always dark, monospace, lowercase, orange = energy. */
+
+/* JetBrains Mono (SIL OFL 1.1), bundled locally so the app works offline. */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono/jetbrains-mono-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02AF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono/jetbrains-mono-latin-ext-700-normal.woff2") format("woff2");
+  unicode-range: U+0100-02AF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono/jetbrains-mono-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
+  The light/dark mode class (theme-dark) lives on <html>. Variables set on
+  <body> win over it, so this theme looks the same in every mode.
+*/
+.color-theme-terminal {
+  /* Palette */
+  --terminal-bg: #111116;
+  --terminal-bar: #1c1c22;
+  --terminal-border: #3a3a44;
+  --terminal-text: #e8e8e8;
+  --terminal-muted: #8a8a92;
+  --terminal-accent: #f07a30;
+  --terminal-cyan: #5bc8e0;
+  --terminal-green: #4cb86a;
+  --terminal-red: #ef5b5b;
+
+  /* Accent */
+  --f7-theme-color: #f07a30;
+  --f7-theme-color-rgb: 240, 122, 48;
+  --f7-theme-color-shade: #d9631a;
+  --f7-theme-color-tint: #f39560;
+
+  /* Typography */
+  --f7-font-family: "JetBrains Mono", ui-monospace, "Roboto Mono", monospace;
+  --f7-text-color: var(--terminal-text);
+
+  /* Surfaces */
+  --f7-page-bg-color: var(--terminal-bg);
+  --f7-bars-bg-color: var(--terminal-bar);
+  --f7-bars-bg-color-rgb: 28, 28, 34;
+  --f7-bars-text-color: var(--terminal-text);
+  --f7-bars-border-color: var(--terminal-border);
+  --f7-list-bg-color: var(--terminal-bg);
+  --f7-list-item-border-color: var(--terminal-border);
+  --f7-list-item-divider-bg-color: var(--terminal-bg);
+  --f7-list-item-after-text-color: var(--terminal-muted);
+  --f7-list-item-footer-text-color: var(--terminal-muted);
+  --f7-list-item-header-text-color: var(--terminal-muted);
+  --f7-list-item-subtitle-text-color: var(--terminal-muted);
+  --f7-list-item-text-text-color: var(--terminal-muted);
+  --f7-block-title-text-color: var(--terminal-muted);
+  --f7-block-header-text-color: var(--terminal-muted);
+  --f7-block-footer-text-color: var(--terminal-muted);
+  --f7-card-bg-color: var(--terminal-bar);
+  --f7-dialog-bg-color: var(--terminal-bar);
+  --f7-actions-bg-color: var(--terminal-bar);
+  --f7-actions-button-pressed-bg-color: var(--terminal-border);
+  --f7-tabbar-link-inactive-color: var(--terminal-muted);
+  --f7-page-master-border-color: var(--terminal-border);
+
+  /* Inputs */
+  --f7-input-text-color: var(--terminal-text);
+  --f7-input-placeholder-color: rgba(232, 232, 232, 0.35);
+  --f7-input-info-text-color: var(--terminal-muted);
+  --f7-input-clear-button-color: var(--terminal-muted);
+  --f7-input-outline-border-color: var(--terminal-border);
+
+  /* Square-ish corners */
+  --f7-card-border-radius: 4px;
+  --f7-list-inset-border-radius: 4px;
+
+  font-family: var(--f7-font-family);
+  font-variant-numeric: tabular-nums;
+  color: var(--f7-text-color);
+  background: var(--terminal-bg);
+}
+
+/* Native form controls do not inherit the font by default */
+.color-theme-terminal input,
+.color-theme-terminal select,
+.color-theme-terminal textarea,
+.color-theme-terminal button {
+  font-family: inherit;
+}
+
+/* Side panel: applyAppMode() sets an inline background-color on it */
+.color-theme-terminal #app-panel {
+  background-color: var(--terminal-bar) !important;
+}
+
+/* Lowercase everywhere the app draws its own text; bold is reserved for total kcal */
+.color-theme-terminal .navbar,
+.color-theme-terminal .subnavbar,
+.color-theme-terminal .toolbar,
+.color-theme-terminal .page-content,
+.color-theme-terminal .button,
+.color-theme-terminal .tab-link {
+  text-transform: lowercase;
+  letter-spacing: 0;
+}
+
+.color-theme-terminal .navbar .title,
+.color-theme-terminal .item-title,
+.color-theme-terminal .block-title {
+  font-weight: 400;
+}
+
+.color-theme-terminal .button {border-radius: 3px;}
+
+/* Per-item macros line is rendered by the diary but only this theme shows it */
+.food-item-inner .item-macros {display: none;}
+
+/* ---------------------------------------------------------------------- */
+/* Title bar: "waistline - diary"                                         */
+/* ---------------------------------------------------------------------- */
+
+/* Monospace glyphs are exactly 1ch wide, so a hard-stop gradient clipped to
+   the text colours each word of a single pseudo-element differently. */
+.color-theme-terminal .navbar .title::before {
+  content: "waistline \2014  ";
+  white-space: pre;
+  background: linear-gradient(90deg, var(--terminal-accent) 0 9ch, var(--terminal-muted) 9ch);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.color-theme-terminal .navbar .title {color: var(--terminal-muted);}
+
+.color-theme-terminal .subnavbar #diary-date {color: var(--terminal-text);}
+
+/* ---------------------------------------------------------------------- */
+/* Diary                                                                  */
+/* ---------------------------------------------------------------------- */
+
+/* Command line: "$ waistline --diary" */
+.color-theme-terminal .page[data-name="diary"] #diary-day::before {
+  content: "$ waistline --diary";
+  display: block;
+  margin: 0 16px 4px;
+  padding: 12px 0 10px;
+  border-bottom: 1px dashed var(--terminal-border);
+  text-transform: none;
+  background: linear-gradient(90deg, var(--terminal-green) 0 2ch, var(--terminal-cyan) 2ch 12ch, var(--terminal-accent) 12ch);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Trailing prompt */
+.color-theme-terminal .page[data-name="diary"] .page-content::after {
+  content: "$ \25AE";
+  display: block;
+  padding: 8px 16px 24px;
+  color: var(--terminal-green);
+}
+
+/* Meals: flat, one dashed separator each, titled like terminal comments */
+.color-theme-terminal .page[data-name="diary"] .card {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-bottom: 1px dashed var(--terminal-border);
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.color-theme-terminal .page[data-name="diary"] .card ul,
+.color-theme-terminal .page[data-name="diary"] .accordion-header,
+.color-theme-terminal .page[data-name="diary"] .accordion-footer {
+  background: transparent;
+  border-radius: 0;
+}
+
+.color-theme-terminal .page[data-name="diary"] .list ul::before,
+.color-theme-terminal .page[data-name="diary"] .list ul::after,
+.color-theme-terminal .page[data-name="diary"] .list .item-inner::after,
+.color-theme-terminal .page[data-name="diary"] .list .item-content::after,
+.color-theme-terminal .page[data-name="diary"] ul.meal-entry::before,
+.color-theme-terminal .page[data-name="diary"] ul.meal-entry::after {
+  display: none;
+}
+
+.color-theme-terminal .page[data-name="diary"] .group-title {
+  color: var(--terminal-muted);
+  font-weight: 400;
+}
+
+.color-theme-terminal .page[data-name="diary"] .group-title::before {content: "# ";}
+
+.color-theme-terminal .page[data-name="diary"] .group-energy {
+  color: var(--terminal-accent);
+  font-weight: 400;
+}
+
+/* Entries: [time +] name . quantity ........ kcal, macros underneath */
+.color-theme-terminal .page[data-name="diary"] .media-list .item-inner {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  column-gap: 0.5em;
+  align-items: baseline;
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-title-row {
+  display: contents;
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-timestamp {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  color: var(--terminal-muted);
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-timestamp i {display: none;}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-timestamp::after {
+  content: " +";
+  color: var(--terminal-green);
+}
+
+/* No timestamps: the green "+" becomes the row prefix instead */
+.color-theme-terminal .page[data-name="diary"] .food-item-inner:not(:has(.item-timestamp)) .item-title::before {
+  content: "+ ";
+  color: var(--terminal-green);
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-title {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  color: var(--terminal-text);
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-portion {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
+  color: var(--terminal-cyan);
+  white-space: nowrap;
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-portion::before {
+  content: "\00B7  ";
+  color: var(--terminal-muted);
+  white-space: pre;
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-after {
+  grid-column: 4;
+  grid-row: 1;
+  margin: 0;
+  color: var(--terminal-accent);
+  white-space: nowrap;
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-subtitle {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  color: var(--terminal-muted);
+  font-style: normal;
+  font-size: 0.8em;
+}
+
+.color-theme-terminal .page[data-name="diary"] .food-item-inner .item-macros {
+  display: block;
+  grid-column: 2 / -1;
+  grid-row: 3;
+  margin: 2px 0 0;
+  color: var(--terminal-muted);
+  font-size: 0.85em;
+}
+
+/* Totals: labels muted, values coloured, thicker dashed rule on top */
+.color-theme-terminal .page[data-name="diary"] .toolbar {
+  border-top: 2px dashed var(--terminal-border);
+}
+
+.color-theme-terminal .page[data-name="diary"] .toolbar::before,
+.color-theme-terminal .page[data-name="diary"] .toolbar::after {
+  display: none;
+}
+
+.color-theme-terminal .page[data-name="diary"] #diary-nutrition .nutrition-total-title {
+  color: var(--terminal-muted);
+  font-weight: 400;
+}
+
+.color-theme-terminal .page[data-name="diary"] #diary-nutrition .nutrition-total-values,
+.color-theme-terminal .page[data-name="diary"] #diary-nutrition .nutrition-total-remaining {
+  color: var(--terminal-text);
+  margin-top: 4px;
+}
+
+/* The diary paints goal status as inline red/green; map it onto the palette */
+.color-theme-terminal .page[data-name="diary"] #diary-nutrition span[style*="green"] {color: var(--terminal-green) !important;}
+.color-theme-terminal .page[data-name="diary"] #diary-nutrition span[style*="red"] {color: var(--terminal-red) !important;}
+
+.color-theme-terminal .page[data-name="diary"] #diary-nutrition #calories-value span,
+.color-theme-terminal .page[data-name="diary"] #diary-nutrition #kilojoules-value span {
+  color: var(--terminal-accent) !important;
+  font-weight: 700;
+}

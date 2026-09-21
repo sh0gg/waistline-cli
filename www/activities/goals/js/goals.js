@@ -18,74 +18,6 @@
 */
 
 app.Goals = {
-
-  el: {},
-
-  init: function() {
-    this.getComponents();
-    this.populateGoalLists();
-  },
-
-  getComponents: function() {
-    app.Goals.el.yourList = document.querySelector(".page[data-name='goals'] #your-goals-list");
-    app.Goals.el.allList = document.querySelector(".page[data-name='goals'] #all-fields-list");
-  },
-
-  populateGoalLists: function() {
-    app.Goals.el.yourList.innerHTML = "";
-    app.Goals.el.allList.innerHTML = "";
-
-    const energyUnit = app.Settings.get("units", "energy");
-    const nutriments = app.Nutriments.getNutriments();
-    const bodyStats = app.BodyStats.getBodyStats();
-    const stats = bodyStats.concat(nutriments);
-
-    for (let x of stats) {
-      if ((x == "calories" || x == "kilojoules") && app.nutrimentUnits[x] != energyUnit) continue;
-
-      let unit = app.Goals.getGoalUnit(x, true);
-      let unitSymbol = app.strings["unit-symbols"][unit] || unit;
-
-      let li = app.Goals.createGoalListItem(x, unitSymbol);
-      app.Goals.el.allList.appendChild(li);
-
-      // Check if a goal has been set for this stat
-      let statGoal = app.Goals.getStatDateGoal(x);
-      let statGoalValues = statGoal["goal"] || [];
-      if (statGoalValues.filter((v) => v != "").length) {
-        let li2 = app.Goals.createGoalListItem(x, unitSymbol);
-        app.Goals.el.yourList.appendChild(li2);
-      }
-    }
-  },
-
-  createGoalListItem: function(stat, unitSymbol) {
-    let li = document.createElement("li");
-
-    let a = document.createElement("a");
-    a.href = "#";
-
-    let text = app.strings.nutriments[stat] || app.strings.statistics[stat] || stat;
-    a.innerText = app.Utils.tidyText(text, 50);
-    if (unitSymbol !== undefined)
-      a.innerText += " (" + unitSymbol + ")";
-    li.appendChild(a);
-
-    li.addEventListener("click", (e) => {
-      app.Goals.gotoEditor(stat);
-    });
-
-    return li;
-  },
-
-  gotoEditor: function(stat) {
-    app.data.context = {
-      stat: stat
-    };
-
-    app.f7.views.main.router.navigate("./goal-editor/");
-  },
-
   getGoalUnit(stat, checkPercentGoal) {
     const preferredUnits = app.Settings.getField("units") || {};
     const nutrimentUnits = app.Nutriments.getNutrimentUnits();
@@ -387,15 +319,3 @@ app.Goals = {
     app.Settings.putField("goals", goals);
   }
 };
-
-document.addEventListener("page:init", function(e) {
-  if (e.target.matches(".page[data-name='goals']")) {
-    app.Goals.init();
-  }
-});
-
-document.addEventListener("page:reinit", function(e) {
-  if (e.target.matches(".page[data-name='goals']")) {
-    app.Goals.init();
-  }
-});

@@ -26,13 +26,6 @@ app.Settings = {
   settings: {},
   ready: false,
 
-  init: function() {
-    app.Settings.bindUIActions();
-
-    const inputs = Array.from(document.querySelectorAll("input, select"));
-    app.Settings.restoreInputValues(inputs);
-  },
-
   put: function(field, setting, value) {
     let settings = JSON.parse(window.localStorage.getItem("settings")) || {};
     settings[field] = settings[field] || {};
@@ -63,359 +56,24 @@ app.Settings = {
     window.localStorage.setItem("settings", JSON.stringify(settings));
   },
 
-  restoreInputValues: function(inputs) {
-    for (let i = 0; i < inputs.length; i++) {
-      let x = inputs[i];
-      let field = x.getAttribute("field");
-      let setting = x.getAttribute("name");
-
-      if (field && setting) {
-        let value = this.get(field, setting); // Get value from storage
-
-        if (value) {
-          if (Array.isArray(value)) { // Deal with array values
-            value.forEach((y, j) => {
-              if (setting == "meal-names") // Meal names must be localized
-                y = app.strings.diary["default-meals"][y.toLowerCase()] || y;
-
-              for (let k = 0; k < inputs.length; k++) {
-                let z = inputs[k];
-
-                if (z.name == x.name) { // If the input matches the name of the original input
-                  if (z.type == "checkbox")
-                    z.checked = y;
-                  else
-                    z.value = y;
-
-                  inputs.splice(k, 1); // Remove input from array because we've done this one
-                  break; // Exit inner loop
-                }
-              }
-            });
-          } else {
-            if (x.type == "checkbox")
-              x.checked = value;
-            else
-              x.value = value;
-          }
-        }
-      }
-    }
-  },
-
-  bindUIActions: function() {
-
-    // Input fields (including selects)
-    const inputs = Array.from(document.querySelectorAll("input:not(.manual-bind), select"));
-
-    inputs.forEach((x, i) => {
-      if (x.hasAttribute("field") && x.hasAttribute("name") && !x.hasChangeEvent) {
-        x.addEventListener("change", (e) => {
-          app.Settings.saveInputs(inputs);
-          if (x.classList.contains("reset-modules"))
-            app.Settings.resetModuleReadyStates(); // Reset modules for changes to take effect
-        });
-        x.hasChangeEvent = true;
-      }
-    });
-
-    // Open Food Facts credentials login button
-    let offLogin = document.getElementById("off-login");
-    if (offLogin) {
-      offLogin.addEventListener("click", function(e) {
-        let username = document.querySelector(".off-login #off-username").value;
-        let password = document.querySelector(".off-login #off-password").value;
-        app.Settings.saveOFFCredentials(username, password);
-      });
-    }
-
-    // USDA API Key save link
-    let usdaSave = document.getElementById("usda-save");
-    if (usdaSave) {
-      usdaSave.addEventListener("click", function(e) {
-        let key = document.querySelector(".usda-login #usda-key").value;
-        app.Settings.saveUSDAKey(key);
-      });
-    }
-
-    // ICU API Key save link
-    let icuSave = document.getElementById("icu-save");
-    if (icuSave) {
-      icuSave.addEventListener("click", function(e) {
-        let key = document.querySelector(".icu-login #icu-key").value;
-        let athleteId = document.querySelector(".icu-login #icu-athlete-id").value;
-        app.Settings.saveICUIntegration(key, athleteId);
-      });
-    }
-
-    // TTS test button
-    let ttsTestButton = document.getElementById("tts-test-button");
-    if (ttsTestButton) {
-      ttsTestButton.addEventListener("click", function(e) {
-        app.TTS.testSettings();
-      });
-    }
-
-    // Import/Export
-    let exportDb = document.getElementById("export-db");
-    if (exportDb) {
-      exportDb.addEventListener("click", function(e) {
-        app.Settings.exportDatabase();
-      });
-    }
-
-    let shareDb = document.getElementById("share-db");
-    if (shareDb) {
-      shareDb.addEventListener("click", function(e) {
-        app.Settings.shareDatabase();
-      });
-    }
-
-    let importDb = document.getElementById("import-db");
-    if (importDb) {
-      importDb.addEventListener("click", function(e) {
-        app.Settings.importDatabase();
-      });
-    }
-
-    let importFoods = document.getElementById("import-foods");
-    if (importFoods) {
-      importFoods.addEventListener("click", function(e) {
-        app.Settings.importFoods();
-      });
-      app.FoodsMealsRecipes.populateCategoriesField(document.getElementById("categories"), {}, false, false, true, true);
-    }
-
-    let exportDiary = document.getElementById("export-diary");
-    if (exportDiary) {
-      exportDiary.addEventListener("click", function(e) {
-        app.Settings.exportDiary();
-      });
-    }
-
-    let shareDiary = document.getElementById("share-diary");
-    if (shareDiary) {
-      shareDiary.addEventListener("click", function(e) {
-        app.Settings.shareDiary();
-      });
-    }
-
-    // Mode
-    let modeSelect = document.querySelector(".page[data-name='settings-appearance'] #mode");
-
-    if (modeSelect != undefined && !modeSelect.hasSecondaryChangeEvent) {
-      modeSelect.addEventListener("change", (e) => {
-        app.Settings.changeTheme(e.target.value, themeSelect.value);
-      });
-      modeSelect.hasSecondaryChangeEvent = true;
-    }
-
-    // Theme
-    let themeSelect = document.querySelector(".page[data-name='settings-appearance'] #theme");
-
-    if (themeSelect != undefined && !themeSelect.hasSecondaryChangeEvent) {
-      themeSelect.addEventListener("change", (e) => {
-        app.Settings.changeTheme(modeSelect.value, e.target.value);
-      });
-      themeSelect.hasSecondaryChangeEvent = true;
-    }
-
-    // Preferred Language
-    let locale = document.querySelector(".page[data-name='settings-appearance'] #locale");
-
-    if (locale != undefined && !locale.hasSecondaryChangeEvent) {
-      locale.addEventListener("change", (e) => {
-        let msg = app.strings.settings["needs-restart"] || "Restart app to apply changes.";
-        app.Utils.toast(msg);
-      });
-      locale.hasSecondaryChangeEvent = true;
-    }
-
-    // Animations
-    let toggleAnimations = document.querySelector(".page[data-name='settings-appearance'] #toggle-animations");
-
-    if (toggleAnimations != undefined && !toggleAnimations.hasSecondaryChangeEvent) {
-      toggleAnimations.addEventListener("change", (e) => {
-        let msg = app.strings.settings["needs-restart"] || "Restart app to apply changes.";
-        app.Utils.toast(msg);
-      });
-      toggleAnimations.hasSecondaryChangeEvent = true;
-    }
-
-    // Nutriment list
-    let nutrimentList = document.getElementById("nutriment-list");
-    if (nutrimentList != undefined) {
-      nutrimentList.addEventListener("sortable:sort", (li) => {
-        let items = nutrimentList.getElementsByTagName("li");
-        let newOrder = [];
-        for (let i = 0; i < items.length - 1; i++) {
-          newOrder.push(items[i].id);
-        }
-        app.Settings.put("nutriments", "order", newOrder);
-      });
-    }
-
-    // Body stats list
-    let bodyStatsList = document.getElementById("body-stats-list");
-    if (bodyStatsList != undefined) {
-      bodyStatsList.addEventListener("sortable:sort", (li) => {
-        let items = bodyStatsList.getElementsByTagName("li");
-        let newOrder = [];
-        for (let i = 0; i < items.length - 1; i++) {
-          newOrder.push(items[i].id);
-        }
-        app.Settings.put("bodyStats", "order", newOrder);
-      });
-    }
-
-    // Food labels/categories list
-    let categoriesList = document.getElementById("food-categories-list");
-    if (categoriesList != undefined) {
-      categoriesList.addEventListener("sortable:sort", (li) => {
-        let items = categoriesList.getElementsByTagName("li");
-        let newOrder = [];
-        for (let i = 0; i < items.length - 1; i++) {
-          newOrder.push(items[i].id);
-        }
-        app.Settings.put("foodlist", "labels", newOrder);
-      });
-    }
-  },
-
-  changeTheme: function(appMode, colourTheme) {
-    let body = document.getElementsByTagName("body")[0];
-    body.className = colourTheme;
-
-    if (appMode === "system") {
-      app.f7.enableAutoDarkTheme(); // darkThemeChange event will handle the rest
-    } else {
-      app.f7.disableAutoDarkTheme();
-      app.Settings.applyAppMode(appMode);
-    }
+  // Only the terminal look exists now: the colour theme and accent are applied by TerminalThemes
+  changeTheme: function() {
+    document.body.className = "color-theme-terminal";
+    app.f7.disableAutoDarkTheme();
+    if (app.TerminalThemes) app.TerminalThemes.apply();
   },
 
   applyAppMode: function(appMode) {
     let html = document.getElementsByTagName("html")[0];
-    let panel = document.getElementById("app-panel");
 
-    if (appMode === "dark") {
+    if (appMode === "dark")
       html.classList.add("theme-dark");
-      panel.style["background-color"] = "black";
-      Chart.defaults.global.defaultFontColor = "white";
-    } else if (appMode === "light") {
+    else if (appMode === "light")
       html.classList.remove("theme-dark");
-      panel.style["background-color"] = "white";
-      Chart.defaults.global.defaultFontColor = "black";
-    }
-  },
-
-  saveInputs: function(inputs) {
-    inputs.forEach((x) => {
-      // If input has same name as other inputs group them into an array
-      let value = inputs.reduce((result, y) => {
-        if (y.name == x.name) {
-          if (y.type == "checkbox")
-            result.push(y.checked);
-          else if ((y.type == "radio" && y.checked) || y.type != "radio")
-            result.push(y.value);
-        }
-        return result;
-      }, []);
-
-      // Input is not part of an array so just get first element
-      if (value.length == 1) value = value[0];
-
-      let field = x.getAttribute("field");
-      let setting = x.getAttribute("name");
-
-      app.Settings.put(field, setting, value);
-    });
   },
 
   resetModuleReadyStates: function() {
     app.Settings.ready = false;
-    app.Diary.ready = false;
-  },
-
-  saveOFFCredentials: async function(username, password) {
-    let screen = document.querySelector(".off-login");
-    if (app.Utils.isInternetConnected()) {
-      if ((username == "" && password == "") || await app.OpenFoodFacts.testCredentials(username, password)) {
-        this.put("integration", "off-username", username);
-        this.put("integration", "off-password", password);
-        app.f7.loginScreen.close(screen);
-        let msg = app.strings.settings.integration["login-success"] || "Login Successful";
-        app.Utils.toast(msg);
-      } else {
-        let msg = app.strings.settings.integration["invalid-credentials"] || "Invalid Credentials";
-        app.Utils.toast(msg);
-      }
-    }
-  },
-
-  saveUSDAKey: async function(key) {
-    let screen = document.querySelector(".usda-login");
-    if (app.Utils.isInternetConnected()) {
-      let result = key == "" ? { valid: true } : await app.USDA.testApiKey(key);
-
-      if (result.valid) {
-        this.put("integration", "usda-key", key);
-        app.f7.loginScreen.close(screen);
-        let msg = app.strings.settings.integration["login-success"] || "Login Successful";
-        app.Utils.toast(msg);
-      } else if (result.reason == "rate-limit") {
-        let msg = app.strings.settings.integration["usda-rate-limited"] || "USDA rate limit reached, try again later";
-        app.Utils.toast(msg);
-      } else if (result.reason == "network") {
-        let msg = app.strings.settings.integration["usda-key-check-failed"] || "Couldn't verify key, check your connection and try again";
-        app.Utils.toast(msg);
-      } else {
-        let msg = app.strings.settings.integration["invalid-api-key"] || "API Key Invalid";
-        app.Utils.toast(msg);
-      }
-    }
-  },
-
-  saveICUIntegration: async function(key, athleteId) {
-    let screen = document.querySelector(".icu-login");
-    if (app.Utils.isInternetConnected()) {
-      if (key == "" || await app.Settings.testIcuIntegration(key, athleteId)) {
-        this.put("integration", "icu-key", key);
-        this.put("integration", "icu-athlete-id", athleteId);
-        app.f7.loginScreen.close(screen);
-        let msg = app.strings.settings.integration["login-success"] || "Login Successful";
-        app.Utils.toast(msg);
-      } else {
-        let msg = app.strings.settings.integration["invalid-icu-api-key"] || "API Key or Athlete ID Invalid";
-        app.Utils.toast(msg);
-      }
-    }
-  },
-
-  testIcuIntegration: function(key, athleteId) {
-
-    return new Promise(async function(resolve, reject) {
-      let url = "https://intervals.icu/api/v1/athlete/" + encodeURIComponent(athleteId);
-
-      let response = await app.Utils.timeoutFetch(url, {
-        headers: {
-          "content-type": "application/json",
-          "authorization": "Basic " + btoa("API_KEY:" + key)
-        }
-      }).catch((err) => {
-        resolve(false);
-      });
-
-      if (response && response.ok) {
-        let data = await response.json();
-        if (!data.error && data.id == athleteId)
-          resolve(true);
-        else
-          resolve(false);
-      }
-
-      resolve(false);
-    });
   },
 
   writeDatabaseBackupToFile: async function() {
@@ -445,69 +103,45 @@ app.Settings = {
     return path;
   },
 
-  exportDatabase: async function() {
-    let path = await app.Settings.writeDatabaseBackupToFile();
+  // Diary days between two dates, as parallel lists (moved here from the old Statistics screen)
+  getDiaryData: function(from, to) {
+    return new Promise(async function(resolve, reject) {
+      let result = {
+        "timestamps": [],
+        "items": [],
+        "stats": []
+      };
 
-    if (path !== undefined) {
-      let msg = app.strings.settings.integration["export-success"] || "Database Exported";
-      app.Utils.notify(msg + ": " + path);
-    } else {
-      let msg = app.strings.settings.integration["export-fail"] || "Export Failed";
-      app.Utils.toast(msg);
-    }
-  },
+      if (!to)
+        to = new Date();
 
-  shareDatabase: async function() {
-    let path = await app.Settings.writeDatabaseBackupToFile();
+      // Make date range inclusive of the whole days at either end
+      let toDate = new Date(Date.UTC(to.getFullYear(), to.getMonth(), to.getDate()));
+      toDate.setHours(0, 0, 0, 0);
+      let fromDate = new Date(Date.UTC(from.getFullYear(), from.getMonth(), from.getDate()));
+      fromDate.setHours(0, 0, 0, 0);
+      toDate.setUTCHours(toDate.getUTCHours() + 24);
 
-    if (path !== undefined) {
-      app.Utils.shareFile(path);
-    }
-  },
+      dbHandler.getIndex("dateTime", "diary").openCursor(IDBKeyRange.bound(fromDate, toDate, false, true)).onsuccess = function(e) {
+        let cursor = e.target.result;
 
-  importDatabase: async function() {
-    let file = await chooser.getFile();
+        if (cursor) {
+          let value = cursor.value;
 
-    if (file !== undefined && file.data !== undefined) {
-      let data;
-      try {
-        let content = new TextDecoder("utf-8").decode(file.data);
-        data = JSON.parse(content);
-      } catch (e) {
-        let msg = app.strings.settings.integration["import-fail"] || "Import Failed";
-        app.Utils.toast(msg);
-      }
+          if (value.items.length > 0 || value.stats.weight != undefined) {
+            result.timestamps.push(value.dateTime);
+            result.items.push(value.items);
+            result.stats.push(value.stats);
+          }
 
-      if (data !== undefined) {
-        let title = app.strings.settings.integration.import || "Import";
-        let text = app.strings.settings.integration["confirm-import"] || "Are you sure? This will overwrite your current database.";
-
-        let dialog = app.f7.dialog.create({
-          title: title,
-          content: app.Utils.getDialogTextDiv(text),
-          buttons: [{
-              text: app.strings.dialogs.cancel || "Cancel",
-              keyCodes: app.Utils.escapeKeyCode
-            },
-            {
-              text: app.strings.dialogs.ok || "OK",
-              keyCodes: app.Utils.enterKeyCode,
-              onClick: async () => {
-                await dbHandler.import(data);
-
-                if (data.settings !== undefined) {
-                  let settings = app.Settings.migrateSettings(data.settings, false);
-                  window.localStorage.setItem("settings", JSON.stringify(settings));
-                  app.Settings.changeTheme(settings.appearance.mode, settings.appearance.theme);
-                  app.Settings.resetModuleReadyStates();
-                  app.f7.views.main.router.refreshPage();
-                }
-              }
-            }
-          ]
-        }).open();
-      }
-    }
+          cursor.continue();
+        } else {
+          resolve(result);
+        }
+      };
+    }).catch(err => {
+      throw (err);
+    });
   },
 
   writeDiaryToCsvFile: async function() {
@@ -557,7 +191,7 @@ app.Settings = {
     });
 
     // Get diary data
-    let diaryData = await app.Stats.getDataFromDb(new Date(0), undefined);
+    let diaryData = await app.Settings.getDiaryData(new Date(0), undefined);
     let csv = "";
 
     // CSV header row
@@ -602,130 +236,14 @@ app.Settings = {
     return path;
   },
 
-  exportDiary: async function() {
-    let path = await app.Settings.writeDiaryToCsvFile();
-
-    if (path !== undefined) {
-      let msg = app.strings.settings.integration["export-success"] || "Database Exported";
-      app.Utils.notify(msg + ": " + path);
-    } else {
-      let msg = app.strings.settings.integration["export-fail"] || "Export Failed";
-      app.Utils.toast(msg);
-    }
-  },
-
-  shareDiary: async function() {
-    let path = await app.Settings.writeDiaryToCsvFile();
-
-    if (path !== undefined) {
-      app.Utils.shareFile(path);
-    }
-  },
-
-  putFoodItem: function(item) {
-    return new Promise(async function(resolve, reject) {
-      if (item.id == undefined) {
-        item.hidden = true; // Hide newly imported items by default
-
-        if (item.barcode !== undefined) {
-          let dbRecord = await dbHandler.getFirstNonArchived("foodList", "barcode", item.barcode);
-
-          if (dbRecord !== undefined) {
-            item.id = dbRecord.id; // Use ID of existing item
-            item.hidden = dbRecord.hidden;
-          }
-        }
-      }
-
-      item.dateTime = new Date();
-
-      dbHandler.put(item, "foodList").onsuccess = (e) => {
-        resolve(e.target.result);
-      };
-    })
-  },
-
-  updateFoodItems: function(items) {
-    items.forEach((x) => {
-      this.putFoodItem(x);
-    });
-  },
-
-  importFoods: async function() {
-    let categories = app.FoodsMealsRecipes.getSelectedCategories(document.getElementById("categories"));
-
-    if (categories == undefined) {
-      let msg = app.strings.settings.integration["import-foods-category-fail"] || "Please select at least one category";
-      app.Utils.toast(msg);
-      return;
-    }
-
-    let file = await chooser.getFile();
-
-    if (file !== undefined && file.data !== undefined) {
-      let data;
-      try {
-        let content = new TextDecoder("utf-8").decode(file.data);
-        data = JSON.parse(content);
-        if (data.version !== 1)
-          throw "Wrong food list version";
-        for (let i = 0; i < data.foodList.length; i++) {
-          if (data.foodList[i].name == undefined)
-            throw "Missing name";
-          if (data.foodList[i].unit == undefined)
-            throw "Missing unit";
-          if (data.foodList[i].portion == undefined)
-            throw "Missing portion";
-        }
-      } catch (e) {
-        console.log(e);
-        let msg = app.strings.settings.integration["import-fail"] || "Import Failed";
-        app.Utils.toast(msg);
-        return;
-      }
-
-      if (data !== undefined) {
-        for (let i = 0; i < data.foodList.length; i++) {
-          // Add selected catogories
-          data.foodList[i].categories = categories;
-          // Add a pseudo-barcode to prevent duplicate imports
-          if (data.foodList[i].id == undefined && data.foodList[i].uniqueId !== undefined)
-            data.foodList[i].barcode = "custom_" + data.foodList[i].uniqueId.toString();
-        }
-
-        let title = app.strings.settings.integration.import || "Import";
-        let text = app.strings.settings["integration"]["confirm-import-foods"] || "Are you sure? This action cannot be undone. Please backup your database first.";
-
-        let dialog = app.f7.dialog.create({
-          title: title,
-          content: app.Utils.getDialogTextDiv(text),
-          buttons: [{
-              text: app.strings.dialogs.cancel || "Cancel",
-              keyCodes: app.Utils.escapeKeyCode
-            },
-            {
-              text: app.strings.dialogs.ok || "OK",
-              keyCodes: app.Utils.enterKeyCode,
-              onClick: async () => {
-                await this.updateFoodItems(data.foodList);
-                let msg = app.strings.settings.integration["import-success-message"] || "Import Complete";
-                app.Utils.toast(msg);
-              }
-            }
-          ]
-        }).open();
-      }
-    }
-  },
-
   firstTimeSetup: function() {
     let defaults = {
       appearance: {
         mode: (window.matchMedia) ? "system" : "light",
-        theme: "color-theme-red",
+        theme: "color-theme-terminal",
         animations: false,
         locale: "auto",
-        "start-page": "/settings/"
+        "start-page": "/terminal/"
       },
       statistics: {
         "y-zero": false,
@@ -766,42 +284,27 @@ app.Settings = {
         kilojoules: {
           "show-in-diary": true,
           "show-in-stats": true,
-          "goal-list": [{
-            "shared-goal": true,
-            "goal": ["8400", "", "", "", "", "", ""]
-          }]
+          "goal-list": [] // no goal until you set one (waistline-cli does not start with sample values)
         },
         calories: {
           "show-in-diary": true,
           "show-in-stats": true,
-          "goal-list": [{
-            "shared-goal": true,
-            "goal": ["2000", "", "", "", "", "", ""]
-          }]
+          "goal-list": [] // no goal until you set one (waistline-cli does not start with sample values)
         },
         fat: {
           "show-in-diary": true,
           "show-in-stats": true,
-          "goal-list": [{
-            "shared-goal": true,
-            "goal": ["70", "", "", "", "", "", ""]
-          }]
+          "goal-list": [] // no goal until you set one (waistline-cli does not start with sample values)
         },
         carbohydrates: {
           "show-in-diary": true,
           "show-in-stats": true,
-          "goal-list": [{
-            "shared-goal": true,
-            "goal": ["260", "", "", "", "", "", ""]
-          }]
+          "goal-list": [] // no goal until you set one (waistline-cli does not start with sample values)
         },
         proteins: {
           "show-in-diary": true,
           "show-in-stats": true,
-          "goal-list": [{
-            "shared-goal": true,
-            "goal": ["50", "", "", "", "", "", ""]
-          }]
+          "goal-list": [] // no goal until you set one (waistline-cli does not start with sample values)
         }
       },
       units: {
@@ -987,24 +490,3 @@ app.Settings = {
     return newGoals;
   }
 };
-
-document.addEventListener("page:init", async function(e) {
-  const pageName = e.target.attributes["data-name"].value;
-
-  if (pageName == "settings-nutriments")
-    app.Nutriments.populateNutrimentList();
-
-  if (pageName == "settings-body-stats")
-    app.BodyStats.populateBodyStatsList();
-
-  if (pageName == "settings-foods-categories")
-    app.FoodsCategories.populateFoodCategoriesList();
-
-  if (pageName == "settings-text-to-speech")
-    app.TTS.populateVoicesSelect();
-
-  //Settings and all settings subpages
-  if (pageName.indexOf("settings") != -1) {
-    app.Settings.init();
-  }
-});

@@ -126,7 +126,8 @@
     "yellow": "Yellow",
     "purple": "Purple",
     "eink": "E-ink",
-    "camino": "Camino"
+    "camino": "Camino",
+    "terminal": "Terminal"
   },
   "statistics": {
     "title": "Statistics",

@@ -1,0 +1,529 @@
+# Spanish for the terminal. "english == spanish". {} is a part that changes. See build-i18n.js.
+# Command names, flags and what you type stay in English. A trailing "(q cancels)" and a leading "usage:" are handled by the code.
+
+# ---------------------------------------------------------------- diary
+how much {}? e.g. 300g, or 0.25 of the whole == ¿cuánto {}? p. ej. 300g, o 0.25 del total
+could not read the amount == no se pudo leer la cantidad
+{} is counted in {}, not {} == {} se cuenta en {}, no en {}
+portions == porciones
+not a valid time: {} == hora no válida: {}
+not a valid date: {} == fecha no válida: {}
+meal {} == comida {}
+(deleted food) == (alimento borrado)
+quick add == adición rápida
+no values yet == sin valores todavía
+(empty) == (vacío)
+(no entries. try: + oats 60g) == (sin entradas. prueba: + oats 60g)
+no entries in {} == no hay entradas en {}
+{} item == {} entrada
+{} items == {} entradas
+{} (today) == {} (hoy)
+{} older days. ls YYYY-MM shows a month. == {} días más antiguos. ls YYYY-MM muestra un mes.
+set kcal and name == cambiar kcal y nombre
+change amount == cambiar la cantidad
+new kcal and name for {}? e.g. 800 "pizza margherita" == ¿nuevos kcal y nombre para {}? p. ej. 800 "pizza margherita"
+new amount for {}? e.g. 60g, 0.5, 2x == ¿nueva cantidad para {}? p. ej. 60g, 0.5, 2x
+move to another meal == mover a otra comida
+move to another day == mover a otro día
+which day for {}? YYYY-MM-DD, today or yesterday == ¿qué día para {}? YYYY-MM-DD, today o yesterday
+no entry {} == no existe la entrada {}
+go to a day first, e.g. cd diary/today == ve primero a un día, p. ej. cd diary/today
+no such meal: {} ({}) == no existe la comida: {} ({})
+updated {} entry == actualizada {} entrada
+updated {} entries == actualizadas {} entradas
+~updated {} entry (now on {}) == actualizada {} entrada (ahora en {})
+~updated {} entries (now on {}) == actualizadas {} entradas (ahora en {})
+log food. amount: 60g, 0.5, 2x, 2 slices. @when: @08:12 @yesterday @2026-09-18 @lunch. quick add: + kcal 650 "pizza" == apunta comida. cantidad: 60g, 0.5, 2x, 2 slices. @cuándo: @08:12 @yesterday @2026-09-18 @lunch. adición rápida: + kcal 650 "pizza"
+no values yet. add them later with: edit <n> kcal <number> == aún sin valores. añádelos luego con: edit <n> kcal <número>
+that is {}. for grams write {}. undo takes it back == eso son {}. para gramos escribe {}. undo lo deshace
+nothing matches "{}". create a food with new, or quick add: + kcal 300 "{}" == nada coincide con "{}". crea un alimento con new, o usa adición rápida: + kcal 300 "{}"
+{} matches for "{}". pick one: == {} coincidencias para "{}". elige una:
+{} (meal, {} items) == {} (comida guardada, {} entradas)
+{} (recipe, makes {}) == {} (receta, rinde {})
+{} per {} == {} por {}
+take back the last thing you added or deleted (repeat to go further back) == deshace lo último que añadiste o borraste (repite para ir más atrás)
+nothing to undo == nada que deshacer
+put the goal for {} back as it was == deja el objetivo de {} como estaba
+nothing to undo: {} has no entries any more == nada que deshacer: {} ya no tiene entradas
+that entry is already gone == esa entrada ya no existe
+removed the last entry you added ({}) == quitada la última entrada que añadiste ({})
+removed the {} entries of the meal you logged ({}) == quitadas las {} entradas de la comida que apuntaste ({})
+restored the entry you deleted ({}) == recuperada la entrada que borraste ({})
+delete entries by the numbers ls shows (undo restores them) == borra entradas por los números que muestra ls (undo las recupera)
+deleted {} == borrado {}
+move entries to another meal, time or day: mv 3 4 @dinner, mv 2 @19:30, mv 5 @yesterday == mueve entradas a otra comida, hora o día: mv 3 4 @dinner, mv 2 @19:30, mv 5 @yesterday
+change an entry: edit 3 0.5, edit 3 80g @13:30. quick-add entries: edit 3 kcal 800 "new name" == cambia una entrada: edit 3 0.5, edit 3 80g @13:30. entradas de adición rápida: edit 3 kcal 800 "nombre nuevo"
+could not read the amount "{}" == no se pudo leer la cantidad "{}"
+its food no longer exists == su alimento ya no existe
+show the details and nutrition of an entry == muestra el detalle y la nutrición de una entrada
+no nutrition values == sin valores nutricionales
+totals for today: energy, balance against your goal, macros == totales de hoy: energía, balance frente a tu objetivo, macros
+{} today == {} hoy
+
+# ---------------------------------------------------------------- foods
+a serving looks like: serving bag=125g == una ración se escribe así: serving bag=125g
+per needs an amount, e.g. per 125g == per necesita una cantidad, p. ej. per 125g
+did not understand "{}" == no se entendió "{}"
+this food has no unit to measure a serving in == este alimento no tiene unidad con la que medir una ración
+a serving of {} must be measured in {}, not {} == una ración de {} debe medirse en {}, no en {}
+per {} == por {}
+barcode {} == código de barras {}
+serving: 1 {} = {} == ración: 1 {} = {}
+no foods match "{}" == ningún alimento coincide con "{}"
+(no foods yet. try new, search or scan) == (aún no hay alimentos. prueba new, search o scan)
+{} more. ls <text> narrows the list. == {} más. ls <texto> acota la lista.
+log it == apuntarlo
+how much {}? e.g. 60g, 0.5, 2x == ¿cuánto {}? p. ej. 60g, 0.5, 2x
+change its values (keeps past days as they were) == cambiar sus valores (los días pasados quedan como estaban)
+what changes for {}? e.g. kcal 900 fat 30 == ¿qué cambia en {}? p. ej. kcal 900 fat 30
+archive (hide from lists, past days keep it) == archivar (se oculta de las listas, los días pasados lo conservan)
+name of the food? == ¿nombre del alimento?
+portion the values are for? e.g. 100g, 1 slice, 350g == ¿para qué porción son los valores? p. ej. 100g, 1 slice, 350g
+could not read a portion from "{}" == no se pudo leer una porción en "{}"
+kcal in {}? == ¿kcal en {}?
+that is not a number == eso no es un número
+macros? e.g. fat 18 carb 30 protein 25 (- to skip) == ¿macros? p. ej. fat 18 carb 30 protein 25 (- para saltar)
+saved {} == guardado {}
+log it with: + {} == apúntalo con: + {}
+you already have "{}". what should the new one be? == ya tienes "{}". ¿qué debe ser el nuevo?
+a new version of it: the old one is archived and days already logged keep their old values == una versión nueva: la antigua se archiva y los días ya apuntados conservan sus valores
+a separate food with the same name == un alimento aparte con el mismo nombre
+nothing saved == no se guardó nada
+per rescales the values you have. use it on its own, or give the new values instead == per reescala los valores que tienes. úsalo solo, o da los valores nuevos en su lugar
+the values are for {}. give the new values too (edit <food> {} kcal ...), or rescale them with: edit <food> per {} == los valores son para {}. da también los valores nuevos (edit <food> {} kcal ...), o reescálalos con: edit <food> per {}
+nothing to change. e.g. edit 2 kcal 900 fat 30 == nada que cambiar. p. ej. edit 2 kcal 900 fat 30
+updated {}. days already logged are not affected by a serving; a new name shows there too == {} actualizado. los días ya apuntados no se ven afectados por una ración; un nombre nuevo sí se ve ahí
+saved as a new version: {} == guardado como versión nueva: {}
+the old one is archived. days already logged keep their old values == la antigua queda archivada. los días ya apuntados conservan sus valores
+cannot rescale {} to {}. give the new values instead == no se puede reescalar {} a {}. da los valores nuevos en su lugar
+the portion must be more than zero == la porción debe ser mayor que cero
+rescaled {}: values are now per {} → {} == reescalado {}: los valores son ahora por {} → {}
+same food, nothing else changes. days already logged stay the same == el mismo alimento, nada más cambia. los días ya apuntados quedan igual
+archived {}. days already logged still show it == {} archivado. los días ya apuntados lo siguen mostrando
+no food {} in the last list == no hay alimento {} en la última lista
+no food matches "{}" == ningún alimento coincide con "{}"
+several foods match "{}". use its number from ls == varios alimentos coinciden con "{}". usa su número de ls
+already in your foods: {} == ya está en tus alimentos: {}
+already in your foods: == ya está en tus alimentos:
+could not compare with Open Food Facts: it uses a different unit == no se pudo comparar con Open Food Facts: usa otra unidad
+Open Food Facts has the same values == Open Food Facts tiene los mismos valores
+Open Food Facts now says (per {}): == Open Food Facts dice ahora (por {}):
+save as a new version (days already logged keep the old values) == guardar como versión nueva (los días ya apuntados conservan los valores antiguos)
+saved the new version of {}. the old one is archived == guardada la versión nueva de {}. la antigua queda archivada
+keep what I have == quedarme con lo que tengo
+no internet. you can still create it: new <name> <portion> kcal <n> barcode {} == sin internet. aún puedes crearlo: new <nombre> <porción> kcal <n> barcode {}
+looking up {} in Open Food Facts... == buscando {} en Open Food Facts...
+no answer from Open Food Facts. try again later == Open Food Facts no responde. inténtalo más tarde
+not in Open Food Facts. let's create it == no está en Open Food Facts. vamos a crearlo
+create a food. all in one line: new "chicken stew" 350g kcal 420 fat 18 carb 30 protein 25. words also: sat sugar fiber salt sodium brand barcode, and serving bag=125g (so + food 1 bag works). leave things out and it asks == crea un alimento. todo en una línea: new "chicken stew" 350g kcal 420 fat 18 carb 30 protein 25. también: sat sugar fiber salt sodium brand barcode, y serving bag=125g (para que + food 1 bag funcione). si dejas cosas fuera, te las pregunta
+look a food up in Open Food Facts and add it to your foods. a barcode number works too == busca un alimento en Open Food Facts y lo añade a tus alimentos. también vale un código de barras
+no internet connection == sin conexión a internet
+searching Open Food Facts... == buscando en Open Food Facts...
+no results for "{}" == sin resultados para "{}"
+{} results. pick one to add it to your foods: == {} resultados. elige uno para añadirlo a tus alimentos:
+scan a barcode with the camera (phone) or type its number. adds the product to your foods == escanea un código de barras con la cámara (móvil) o escribe su número. añade el producto a tus alimentos
+no code scanned. the camera only works on the phone; here type: scan <barcode> == no se escaneó ningún código. la cámara solo funciona en el móvil; aquí escribe: scan <código>
+a barcode is 6 to 14 digits == un código de barras tiene de 6 a 14 dígitos
+
+# ---------------------------------------------------------------- notes commands append to their description
+(in ~/foods: a food) == (en ~/foods: un alimento)
+(in ~/foods: archives a food) == (en ~/foods: archiva un alimento)
+(in ~/foods: changes a food. new values make a new version. per 125g rescales the same food. serving bag=125g sets a named serving) == (en ~/foods: cambia un alimento. los valores nuevos crean una versión nueva. per 125g reescala el mismo alimento. serving bag=125g fija una ración con nombre)
+(in ~/meals: a meal) == (en ~/meals: una comida guardada)
+(in ~/meals: a meal. new sandwich = white bread 2 slices, gouda 2 slices, mayo 10g) == (en ~/meals: una comida guardada. new sandwich = white bread 2 slices, gouda 2 slices, mayo 10g)
+(in ~/meals: deletes a meal) == (en ~/meals: borra una comida guardada)
+(in ~/meals: replaces a meal's ingredients) == (en ~/meals: sustituye los ingredientes de una comida guardada)
+(in ~/recipes: a recipe) == (en ~/recipes: una receta)
+(in ~/recipes: a recipe. new sandwich = white bread 2 slices, gouda 2 slices, yield 1 portion. or from values: new stew yield 4 portions kcal 1600 fat 60) == (en ~/recipes: una receta. new sandwich = white bread 2 slices, gouda 2 slices, yield 1 portion. o desde valores: new stew yield 4 portions kcal 1600 fat 60)
+(in ~/recipes: changes a recipe, as a new version) == (en ~/recipes: cambia una receta, como versión nueva)
+(in ~/recipes: deletes a recipe) == (en ~/recipes: borra una receta)
+
+# ---------------------------------------------------------------- meals
+no food named "{}". create it with new == no hay ningún alimento llamado "{}". créalo con new
+several foods match "{}" ({}). use the full name == varios alimentos coinciden con "{}" ({}). usa el nombre completo
+{}: one of its foods no longer exists == {}: ya no existe uno de sus alimentos
+what is in {}? e.g. new {} = white bread 2 slices, gouda 2 slices == ¿qué lleva {}? p. ej. new {} = white bread 2 slices, gouda 2 slices
+you already have a meal called {}. change it with: edit {} = ... == ya tienes una comida guardada llamada {}. cámbiala con: edit {} = ...
+saved meal {} == comida guardada {}
+~{} items → {} == {} entradas → {}
+updated meal {} == comida guardada {} actualizada
+deleted meal {}. days already logged are not affected == comida guardada {} borrada. los días ya apuntados no se ven afectados
+a meal is scaled with a plain number: + {} 2x, or 0.5 == una comida guardada se escala con un número solo: + {} 2x, o 0.5
+(no meals yet. try: new sandwich = white bread 2 slices, gouda 2 slices) == (aún no hay comidas guardadas. prueba: new sandwich = white bread 2 slices, gouda 2 slices)
+check == revisar
+how many {}? e.g. 1, 0.5, 2x == ¿cuántas raciones de {}? p. ej. 1, 0.5, 2x
+delete (days already logged are not affected) == borrar (los días ya apuntados no se ven afectados)
+no meal {} in the last list == no hay comida guardada {} en la última lista
+no meal matches "{}" == ninguna comida guardada coincide con "{}"
+several meals match "{}". use its number from ls == varias comidas guardadas coinciden con "{}". usa su número de ls
+
+# ---------------------------------------------------------------- recipes
+{} portion == {} porción
+{} portions == {} porciones
+~{}/portion == {}/porción
+how much does {} make? e.g. 1 portion, 4 portions, 800g == ¿cuánto rinde {}? p. ej. 1 portion, 4 portions, 800g
+could not read that. try 4 portions, or 800g == no se pudo leer. prueba 4 portions, o 800g
+saved recipe {} == receta guardada {}
+makes {} → {} in all, {} == rinde {} → {} en total, {}
+makes {} → {} == rinde {} → {}
+makes {} == rinde {}
+made from {} == hecha desde {}
+the regular screen == la pantalla normal
+you already have a recipe called "{}". what should the new one be? == ya tienes una receta llamada "{}". ¿qué debe ser la nueva?
+a separate recipe with the same name == una receta aparte con el mismo nombre
+what is in {}? e.g. new {} = white bread 2 slices, gouda 2 slices, yield 1 portion == ¿qué lleva {}? p. ej. new {} = white bread 2 slices, gouda 2 slices, yield 1 portion
+could not read the yield. try yield 4 portions, or yield 800g == no se pudo leer el rendimiento. prueba yield 4 portions, o yield 800g
+could not read the yield == no se pudo leer el rendimiento
+how much does it make? e.g. 1 portion, 4 portions, 800g == ¿cuánto rinde? p. ej. 1 portion, 4 portions, 800g
+kcal in the whole recipe ({})? == ¿kcal en toda la receta ({})?
+{} is a quick add with no food behind it, so it cannot be part of a recipe == {} es una adición rápida sin alimento detrás, así que no puede formar parte de una receta
+{} is not a plain food, so it cannot be part of a recipe == {} no es un alimento simple, así que no puede formar parte de una receta
+one of its foods no longer exists == ya no existe uno de sus alimentos
+go to ~/meals or ~/recipes first. cp <n|name> ~/recipes turns a meal into a recipe, and back == ve primero a ~/meals o ~/recipes. cp <n|name> ~/recipes convierte una comida guardada en receta, y al revés
+the destination must be ~/{} == el destino debe ser ~/{}
+{} was made from values, so it has no ingredient list to make a meal from == {} se hizo a partir de valores, así que no tiene lista de ingredientes para hacer una comida guardada
+you already have a meal called {} == ya tienes una comida guardada llamada {}
+{} items. + {} will now ask which one you mean == {} entradas. + {} preguntará ahora a cuál te refieres
+{} was made from values, so there are no ingredients to recalculate from == {} se hizo a partir de valores, así que no hay ingredientes con los que recalcular
+{} already matches the current foods ({}) == {} ya coincide con los alimentos actuales ({})
+{} in all: {} → {} == {} en total: {} → {}
+give the ingredients, e.g. edit {} = white bread 2 slices, gouda 2 slices == da los ingredientes, p. ej. edit {} = white bread 2 slices, gouda 2 slices
+nothing to change. e.g. edit 1 yield 6 portions, edit 1 kcal 1700, edit 1 = white bread 2 slices, yield 1 portion == nada que cambiar. p. ej. edit 1 yield 6 portions, edit 1 kcal 1700, edit 1 = white bread 2 slices, yield 1 portion
+renamed. days already logged show the new name == renombrada. los días ya apuntados muestran el nombre nuevo
+deleted recipe {}. days already logged still show it == receta {} borrada. los días ya apuntados la siguen mostrando
+the whole recipe: == la receta entera:
+(no recipes yet. try: new sandwich = white bread 2 slices, gouda 2 slices, yield 1 portion) == (aún no hay recetas. prueba: new sandwich = white bread 2 slices, gouda 2 slices, yield 1 portion)
+values only == solo valores
+how much {}? e.g. 1, 2 portions, 0.5, 300g == ¿cuánto {}? p. ej. 1, 2 portions, 0.5, 300g
+recalculate from the current foods == recalcular con los alimentos actuales
+delete (days already logged still show it) == borrar (los días ya apuntados la siguen mostrando)
+no recipe {} in the last list == no hay receta {} en la última lista
+no recipe matches "{}" == ninguna receta coincide con "{}"
+several recipes match "{}". use its number from ls == varias recetas coinciden con "{}". usa su número de ls
+go to ~/recipes first == ve primero a ~/recipes
+in ~/recipes: recalculate a recipe from the foods as they are now, as a new version (past days keep the old values) == en ~/recipes: recalcula una receta con los alimentos tal como están ahora, como versión nueva (los días pasados conservan los valores antiguos)
+in a day: turn entries into a recipe. save 3 4 5 as sandwich == en un día: convierte entradas en una receta. save 3 4 5 as sandwich
+in ~/meals: cp sandwich ~/recipes makes a recipe from a saved meal. in ~/recipes: cp sandwich ~/meals makes a meal from a recipe == en ~/meals: cp sandwich ~/recipes hace una receta a partir de una comida guardada. en ~/recipes: cp sandwich ~/meals hace una comida guardada a partir de una receta
+
+# ---------------------------------------------------------------- body
+"{}" is not a number == "{}" no es un número
+{} is in {}, not {} == {} está en {}, no en {}
+plain numbers == números sin unidad
+the value must be more than 0 == el valor debe ser mayor que 0
+{} is outside what {} normally is ({} to {}) == {} está fuera de lo habitual para {} ({} a {})
+{} is far from your nearest {} ({} on {}) == {} está lejos de tu {} más cercano ({} el {})
+{}, a day away == {}, a un día
+{}, {} days away == {}, a {} días
+~fat + muscle add up to {}%, which is more than 100% == grasa + músculo suman {}%, que es más del 100%
+~fat + muscle + bone add up to {}%, which is more than 100% == grasa + músculo + hueso suman {}%, que es más del 100%
+water {}% does not fit {}% body fat (about {}% would be usual) == el agua {}% no encaja con {}% de grasa corporal (lo habitual sería en torno a {}%)
+a metabolic rate of {} for {} kg is {} per kg (scales usually give 15 to 30) == un metabolismo basal de {} para {} kg son {} por kg (las básculas suelen dar de 15 a 30)
+a day's energy of {} is less than your metabolic rate of {} (was the watch worn all day?) == el gasto del día, {}, es menor que tu metabolismo basal, {} (¿llevaste el reloj todo el día?)
+put the measurements of {} back as they were == deja las medidas de {} como estaban
+saved {}: {} == guardado {}: {}
+cleared {} on {} == borrado {} el {}
+nothing changed == no cambió nada
+a measurement belongs to a day, not to a time or a meal. use @yesterday or @2026-09-18 == una medida pertenece a un día, no a una hora ni a una comida. usa @yesterday o @2026-09-18
+no body fields are defined. add one with: field add weight kg == no hay campos corporales definidos. añade uno con: field add weight kg
+there is no weight field. add one with: field add weight kg == no hay campo de peso. añade uno con: field add weight kg
+no field called "{}". you have: {} == no hay ningún campo llamado "{}". tienes: {}
+{} needs a value, e.g. {} 18.5 (or - to clear it) == {} necesita un valor, p. ej. {} 18.5 (o - para borrarlo)
+did you mean {} for {}? type it again if so; it is not applied for you == ¿querías decir {} para {}? escríbelo de nuevo si es así; no se aplica por ti
+save what you typed anyway? y saves, anything else cancels == ¿guardar lo que escribiste de todos modos? y guarda, cualquier otra cosa cancela
+no body field is shown. show one with: field show weight == no se muestra ningún campo corporal. muestra uno con: field show weight
+measurements for {} {}. Enter leaves a field empty, - clears it, q cancels == medidas de {} {}. Enter deja un campo vacío, - lo borra, q cancela
+asking for: {}. more with: fields == preguntando por: {}. más con: fields
+left empty: {} == vacíos: {}
+now {} == ahora {}
+last {} on {} == último {} el {}
+next {} on {} == siguiente {} el {}
+did you mean {}? type it if so; it is not applied for you == ¿querías decir {}? escríbelo si es así; no se aplica por ti
+keep {}? y keeps it, type another value, Enter leaves {} empty == ¿mantener {}? y lo mantiene, escribe otro valor, Enter deja {} vacío
+no measurements in {} == no hay medidas en {}
+(no measurements yet. try: weight) == (aún no hay medidas. prueba: weight)
+{} older days. ls YYYY-MM shows a month. tap a day to change it. == {} días más antiguos. ls YYYY-MM muestra un mes. toca un día para cambiarlo.
+tap a day to change it. ls <field> shows one field's history. == toca un día para cambiarlo. ls <campo> muestra el historial de un campo.
+no {} recorded yet == aún no hay {} registrado
+{} measurements == {} medidas
+~{} measurements, showing the last {} == {} medidas, mostrando las últimas {}
+asked for == se pregunta
+hidden == oculto
+field add <name> [unit] adds one. field hide|show <name> chooses which are asked for. == field add <nombre> [unidad] añade uno. field hide|show <nombre> elige cuáles se preguntan.
+"{}" is already a field or a nutriment name. pick another, e.g. "body fat" == "{}" ya es un campo o un nombre de nutriente. elige otro, p. ej. "body fat"
+added {}. weight will ask for it from now on == añadido {}. weight lo preguntará a partir de ahora
+no field called "{}" == no hay ningún campo llamado "{}"
+{} is asked for again == {} se vuelve a preguntar
+{} is hidden. its values stay where they are == {} queda oculto. sus valores se quedan donde están
+log body measurements. on its own it asks field by field: Enter leaves one empty, - clears it. or all at once: weight 74.2 fat 18.5 water 55. a value far from your usual is pointed out before saving. blank fields are never filled in == apunta medidas corporales. a secas pregunta campo a campo: Enter deja uno vacío, - lo borra. o todo de una vez: weight 74.2 fat 18.5 water 55. un valor lejos de lo habitual se señala antes de guardar. los campos en blanco nunca se rellenan
+the body measurement fields, and which ones are asked for == los campos de medidas corporales, y cuáles se preguntan
+add a body measurement field (field add water %) or choose which are asked for. hiding never deletes values == añade un campo de medida corporal (field add water %) o elige cuáles se preguntan. ocultar nunca borra valores
+no measurements to remove on {} == no hay medidas que quitar el {}
+(in ~/body: removes the measurements of a day, or just some fields) == (en ~/body: quita las medidas de un día, o solo algunos campos)
+
+# ---------------------------------------------------------------- goals
+no goal == sin objetivo
+{}% of energy == {}% de la energía
+% of energy == % de la energía
+at least {} == al menos {}
+minimum == mínimo
+auto-adjust == ajuste automático
+← now == ← ahora
+a goal starts on a day: @2026-10-01 or @tomorrow. not a time or a meal == un objetivo empieza en un día: @2026-10-01 o @tomorrow. no en una hora ni en una comida
+a goal starts today or later, so the days already lived keep the goal they had. use @{} or a later day == un objetivo empieza hoy o más tarde, así que los días ya vividos conservan el que tenían. usa @{} o un día posterior
+no stat called "{}". try calories, protein, carbs, fat, weight... == no hay ninguna medida llamada "{}". prueba calories, protein, carbs, fat, weight...
+no stat called "{}" == no hay ninguna medida llamada "{}"
+give one value, or seven for the days of the week starting on your first day ({}) == da un valor, o siete para los días de la semana empezando por tu primer día ({})
+only fat, carbohydrates, proteins, sugars, saturated fat and alcohol can be a percentage of energy == solo fat, carbohydrates, proteins, sugars, saturated fat y alcohol pueden ser un porcentaje de la energía
+goal for {}: {} from {} == objetivo de {}: {} desde {}
+~goal for {}: {} (auto-adjusted) from {} == objetivo de {}: {} (ajuste automático) desde {}
+days before today keep the goal they had == los días anteriores a hoy conservan el objetivo que tenían
+{} goals are in {}, not {} == los objetivos de {} están en {}, no en {}
+the goal cannot be negative == el objetivo no puede ser negativo
+(no goals yet. try: goal calories 2000) == (aún no hay objetivos. prueba: goal calories 2000)
+since {} == desde {}
+different each day == distinto cada día
+has earlier versions == tiene versiones anteriores
+tap one for its history. goal <stat> <value> changes it from today. == toca uno para ver su historial. goal <medida> <valor> lo cambia desde hoy.
+~{} (no unit) == {} (sin unidad)
+from {} == desde {}
+from the start == desde el principio
+little or no exercise, desk job == poco o ningún ejercicio, trabajo de oficina
+light exercise 1 to 3 days a week == ejercicio ligero 1 a 3 días a la semana
+moderate exercise 3 to 5 days a week == ejercicio moderado 3 a 5 días a la semana
+hard exercise 6 to 7 days a week == ejercicio intenso 6 a 7 días a la semana
+hard exercise and a physical job == ejercicio intenso y trabajo físico
+height looks like 178 or 178cm or 70in == la altura se escribe como 178 o 178cm o 70in
+that height is outside 100 to 250 cm == esa altura queda fuera de 100 a 250 cm
+birth date looks like 1990-05-12 == la fecha de nacimiento se escribe como 1990-05-12
+that gives an age of {}, which looks wrong == eso da una edad de {}, que parece incorrecta
+sex for the formula: m or f (or - to clear it) == sexo para la fórmula: m o f (o - para borrarlo)
+activity is 1 to 5: {} == activity va de 1 a 5: {}
+unknown profile field == campo de perfil desconocido
+profile (only used for the plan's formula estimate; blank stays blank) == perfil (solo se usa para la estimación por fórmula del plan; lo que esté en blanco sigue en blanco)
+{} ({} years) == {} ({} años)
+birth date == nacimiento
+profile cleared == perfil borrado
+height in cm (178, or 70in) == altura en cm (178, o 70in)
+birth date (1990-05-12) == fecha de nacimiento (1990-05-12)
+sex, for the formula only (m or f) == sexo, solo para la fórmula (m o f)
+activity: {} == actividad: {}
+profile: only what the plan's formula estimate needs. Enter leaves a field as it is, - clears it, q cancels == perfil: solo lo que necesita la estimación por fórmula del plan. Enter deja un campo como está, - lo borra, q cancela
+now {}? == ahora {}
+set a goal from today (past days keep theirs): goal calories 2100, goal protein 120 min, goal fat 30 pct, goal weight 70, goal calories none. seven values set each day of the week. on its own it lists goals == fija un objetivo desde hoy (los días pasados conservan el suyo): goal calories 2100, goal protein 120 min, goal fat 30 pct, goal weight 70, goal calories none. siete valores fijan cada día de la semana. a secas lista los objetivos
+your height, birth date, sex and activity level, only for the plan's formula estimate. on its own it asks; Enter skips a field. profile show / clear == tu altura, fecha de nacimiento, sexo y nivel de actividad, solo para la estimación por fórmula del plan. a secas pregunta; Enter salta un campo. profile show / clear
+(in ~/goals: a goal's history) == (en ~/goals: el historial de un objetivo)
+
+# ---------------------------------------------------------------- plan
+needs 5 weigh-ins in the last {} days, you have {} == necesita 5 pesajes en los últimos {} días, tienes {}
+the weigh-ins span {} days, 10 are needed == los pesajes abarcan {} días, hacen falta 10
+average of the {} days you entered, of the last {} == media de los {} días que anotaste, de los últimos {}
+scale bmr + the watch's activity energy ({} days entered) == bmr de la báscula + la energía de actividad del reloj ({} días anotados)
+~watch (needs 3 days of {} in the last {}) == watch (necesita 3 días de {} en los últimos {})
+watch (add the field with: field add burned kcal, then enter your watch's daily energy) == watch (añade el campo con: field add burned kcal, y anota el gasto diario de tu reloj)
+bmr {} ({} readings) x {} {} == bmr {} ({} lecturas) x {} {}
+~scale (needs bmr readings) == scale (necesita lecturas de bmr)
+~scale (needs bmr readings and an activity level: profile activity 2) == scale (necesita lecturas de bmr y un nivel de actividad: profile activity 2)
+intake {} over {} days, weight {} kg/week == ingesta {} en {} días, peso {} kg/semana
+~data (needs {}) == data (necesita {})
+a weight trend: {} == una tendencia de peso: {}
+10 logged days in the last {}, you have {} == 10 días registrados en los últimos {}, tienes {}
+formula (fill in profile: height, birth date, sex and activity) == formula (rellena profile: height, dob, sex y activity)
+not available: {} == no disponible: {}
+estimates from what you entered, not medical advice == estimaciones a partir de lo que anotaste, no consejo médico
+{} ({} days ago) == {} (hace {} días)
+none entered yet: weight == nada anotado todavía: weight
+{} kg/week over {} weigh-ins in {} days == {} kg/semana en {} pesajes a lo largo de {} días
+not enough weigh-ins ({}) == pocos pesajes ({})
+{} a day, over {} logged days of the last {} (a day counts from {}) == {} al día, en {} días registrados de los últimos {} (un día cuenta desde {})
+no logged days in the last {} == ningún día registrado en los últimos {}
+what you spend: nothing to go on yet == lo que gastas: aún no hay nada en qué basarse
+what you spend a day, each from its own source (not blended): == lo que gastas al día, cada uno de su propia fuente (sin mezclar):
+your watch and your own intake and weight differ by {} a day. either could be off; the data source only holds if you logged everything you ate == tu reloj y tu propia ingesta y peso difieren en {} al día. cualquiera puede fallar; la fuente data solo vale si apuntaste todo lo que comiste
+next: plan lose 0.5 (kg a week), plan gain 0.25, plan maintain. add move 200 to spend 200 more, from watch|scale|data|formula to choose the source == siguiente: plan lose 0.5 (kg por semana), plan gain 0.25, plan maintain. añade move 200 para gastar 200 más, from watch|scale|data|formula para elegir la fuente
+the pace is kilograms a week, more than 0 and at most 1.5 == el ritmo son kilogramos por semana, más de 0 y como máximo 1.5
+move is the extra kcal a day you would spend, e.g. move 200 == move son las kcal extra al día que gastarías, p. ej. move 200
+move only makes sense when losing: it is the part of the deficit that comes from spending more == move solo tiene sentido al perder: es la parte del déficit que sale de gastar más
+watch, scale, data or formula == watch, scale, data o formula
+there is no {} estimate yet. plan shows what each source needs == aún no hay estimación de {}. plan muestra lo que necesita cada fuente
+nothing to build a plan on yet. run plan to see what is missing == aún no hay nada sobre lo que construir un plan. ejecuta plan para ver qué falta
+your body mass index is {}, under 18.5, so no weight-loss plan is offered. maintain or gain work, and a professional can help == tu índice de masa corporal es {}, menor de 18.5, así que no se ofrece un plan para perder peso. maintain o gain sí valen, y un profesional puede ayudarte
+move {} is more than the whole deficit of {} == move {} es más que todo el déficit de {}
+that is {}% of your weight a week; more than 1% is hard to keep up == eso es el {}% de tu peso a la semana; más del 1% es difícil de mantener
+the deficit is over a quarter of what you spend; smaller steps last longer == el déficit supera una cuarta parte de lo que gastas; los pasos pequeños duran más
+that is below your scale's metabolic rate of {} == eso queda por debajo del metabolismo basal de tu báscula, {}
+under 1,200 kcal a day is below what is generally advised for adults without professional guidance == menos de 1,200 kcal al día queda por debajo de lo que se aconseja en general a adultos sin guía profesional
+{} {} a day ({}) == {} {} al día ({})
+to keep your weight: about {} a day == para mantener tu peso: unas {} al día
+~to lose {} kg a week: a deficit of {} a day == para perder {} kg a la semana: un déficit de {} al día
+~to gain {} kg a week: a surplus of {} a day == para ganar {} kg a la semana: un superávit de {} al día
+~eat about {} a day == come unas {} al día
+~eat about {} a day, and spend {} more than you do now == come unas {} al día, y gasta {} más de lo que gastas ahora
+{} is about {} minutes of brisk walking at {} kg (rough) == {} son unos {} minutos de caminata rápida con {} kg (aproximado)
+to split it, add move 200: eat {} and spend 200 more == para repartirlo, añade move 200: come {} y gasta 200 más
+~protein: at least about {} g a day helps keep muscle while losing (1.6 g per kg) == proteína: al menos unos {} g al día ayudan a conservar el músculo mientras pierdes (1.6 g por kg)
+~protein: at least about {} g a day helps keep muscle while losing (1.6 g per kg). add protein to include it in plan apply == proteína: al menos unos {} g al día ayudan a conservar el músculo mientras pierdes (1.6 g por kg). añade protein para incluirla en plan apply
+your weight goal is {} kg: {} kg to go, about {} weeks at this pace (around {}) == tu objetivo de peso es {} kg: faltan {} kg, unas {} semanas a este ritmo (hacia el {})
+~your weight goal of {} kg is already reached or above where you are == tu objetivo de peso de {} kg ya está alcanzado o por encima de donde estás
+~your weight goal of {} kg is already reached or below where you are == tu objetivo de peso de {} kg ya está alcanzado o por debajo de donde estás
+~estimates, not medical advice. plan apply sets your calorie goal to {} from today, after asking == estimaciones, no consejo médico. plan apply fija tu objetivo de calorías en {} desde hoy, tras preguntar
+~estimates, not medical advice. plan apply sets your calorie goal to {} and protein to at least {} g from today, after asking == estimaciones, no consejo médico. plan apply fija tu objetivo de calorías en {} y la proteína en al menos {} g desde hoy, tras preguntar
+nothing to apply yet. run plan lose 0.5 (or gain, maintain) first == aún no hay nada que aplicar. ejecuta antes plan lose 0.5 (o gain, maintain)
+the last plan you worked out: {} == el último plan que calculaste: {}
+~to keep your weight, from {} == para mantener tu peso, desde {}
+~lose {} kg a week, from {} == perder {} kg a la semana, desde {}
+~gain {} kg a week, from {} == ganar {} kg a la semana, desde {}
+~lose {} kg a week, move {}, from {} == perder {} kg a la semana, move {}, desde {}
+~gain {} kg a week, move {}, from {} == ganar {} kg a la semana, move {}, desde {}
+~set your calorie goal to {} {} from today? days before today keep their goal. y applies == ¿fijar tu objetivo de calorías en {} {} desde hoy? los días anteriores a hoy conservan el suyo. y lo aplica
+~set your energy goal to {} {} from today? days before today keep their goal. y applies == ¿fijar tu objetivo de energía en {} {} desde hoy? los días anteriores a hoy conservan el suyo. y lo aplica
+~set your calorie goal to {} {} and protein to at least {} g from today? days before today keep their goal. y applies == ¿fijar tu objetivo de calorías en {} {} y la proteína en al menos {} g desde hoy? los días anteriores a hoy conservan el suyo. y lo aplica
+~set your energy goal to {} {} and protein to at least {} g from today? days before today keep their goal. y applies == ¿fijar tu objetivo de energía en {} {} y la proteína en al menos {} g desde hoy? los días anteriores a hoy conservan el suyo. y lo aplica
+goal for proteins: at least {} g from {} == objetivo de proteínas: al menos {} g desde {}
+~undo puts back the last one == undo devuelve el último
+~undo puts back the last one, and again for the other == undo devuelve el último, y otra vez el otro
+what you spend a day, from each source you have (watch, scale, your own data, formula), and what to eat to lose or gain: plan lose 0.5, plan lose 0.5 move 200. plan apply sets it as your goal after asking. estimates only == lo que gastas al día, con cada fuente que tengas (watch, scale, tus propios datos, formula), y qué comer para perder o ganar: plan lose 0.5, plan lose 0.5 move 200. plan apply lo fija como tu objetivo tras preguntar. solo estimaciones
+
+# ---------------------------------------------------------------- stats
+last 30 days == últimos 30 días
+last {} days == últimos {} días
+no chart called "{}". try: {} == no hay ninguna gráfica llamada "{}". prueba: {}
+{} reading == {} lectura
+{} readings == {} lecturas
+~, within 10% of goal on {} of {} == , a menos del 10% del objetivo en {} de {}
+logged {} of {} finished days == registrados {} de {} días completos
+{} g/day == {} g/día
+average of {} logged days == media de {} días registrados
+{} days from the watch == {} días del reloj
+intake minus the watch, on {} days that have both == ingesta menos reloj, en {} días que tienen ambos
+nothing to show in this range yet. log meals and measurements first == aún no hay nada que mostrar en este rango. apunta antes comidas y medidas
+tap a row for its chart. also: stats energy, composition, weeks, top, project. add 7d, 12w, 6m or all for the range == toca una fila para ver su gráfica. también: stats energy, composition, weeks, top, project. añade 7d, 12w, 6m o all para el rango
+no {} readings in this range == no hay lecturas de {} en este rango
+latest {} on {} == último {} el {}
+{} since {} == {} desde {}
+low {}, high {} == mínimo {}, máximo {}
+no line is drawn across gaps longer than 3 days, and the average needs 3 readings a week == no se dibuja línea a través de huecos de más de 3 días, y la media necesita 3 lecturas por semana
+no meals logged in this range == no hay comidas apuntadas en este rango
+average {} == media {}
+{} logged days == {} días registrados
+light bars: today, or a day under {} (probably not finished); they are left out of the average == barras claras: hoy, o un día por debajo de {} (probablemente sin terminar); se dejan fuera de la media
+average {} g over {} logged days == media {} g en {} días registrados
+no watch energy entered in this range. add it with: field add burned kcal, then weight == no hay gasto del reloj anotado en este rango. añádelo con: field add burned kcal, y luego weight
+no day has both a finished intake and the watch's energy == ningún día tiene a la vez una ingesta completa y la energía del reloj
+no day has both a finished intake and the watch's energy in this range == ningún día de este rango tiene a la vez una ingesta completa y la energía del reloj
+on the {} days with both: intake minus the watch averages {} a day. stats balance draws it day by day == en los {} días con ambos: ingesta menos reloj da una media de {} al día. stats balance lo dibuja día a día
+~average {} a day over {} days. a watch can over- or under-count, so compare it with your weight trend == media {} al día en {} días. un reloj puede contar de más o de menos, así que compáralo con tu tendencia de peso
+composition needs a weight field and a body fat field == composition necesita un campo de peso y uno de grasa corporal
+no day in this range has both a weight and a body fat == ningún día de este rango tiene a la vez peso y grasa corporal
+~since {}: fat mass {} {}, lean mass {} {}. scales measure fat and water by electrical resistance, so read the direction over weeks, not single days == desde {}: masa grasa {} {}, masa magra {} {}. las básculas miden grasa y agua por resistencia eléctrica, así que lee la dirección a lo largo de semanas, no de días sueltos
+week of    weight   change   intake  burned  balance  logged == semana de  peso     cambio   ingesta gasto   balance  días
+weights and averages count only days you entered. intake counts finished days. {} a day == los pesos y medias cuentan solo los días que anotaste. la ingesta cuenta días completos. {} al día
+nothing logged in this range == nada apuntado en este rango
+{} more foods gave the remaining {}% == {} alimentos más aportaron el {}% restante
+~what gave the most protein · {} → {} == qué aportó más proteína · {} → {}
+~what gave the most energy · {} → {} == qué aportó más energía · {} → {}
+a projection needs at least 3 weigh-ins in the last 6 weeks, you have {} == una proyección necesita al menos 3 pesajes en las últimas 6 semanas, tienes {}
+no trend yet (needs 5 weigh-ins over 10 days) and no plan to follow. try: stats project lose 0.5 == aún no hay tendencia (necesita 5 pesajes en 10 días) ni plan que seguir. prueba: stats project lose 0.5
+projections need a weight field == las proyecciones necesitan un campo de peso
+no body fat readings in the last 2 weeks, so there is no body fat projection == no hay lecturas de grasa corporal en las últimas 2 semanas, así que no hay proyección de grasa corporal
+in {} weeks ({}), an estimate: == en {} semanas ({}), una estimación:
+~start: {} {} (trend line today), {}% fat. share of a weight change that is fat: {} == inicio: {} {} (línea de tendencia de hoy), {}% de grasa. parte de un cambio de peso que es grasa: {}
+{} reaches your goal of {} {} in about {} weeks (around {}) == {} llega a tu objetivo de {} {} en unas {} semanas (hacia el {})
+straight lines: real progress slows and wobbles. body fat comes from a scale that reads electrical resistance. use this as a direction, not a promise == líneas rectas: el progreso real se frena y oscila. la grasa corporal viene de una báscula que lee resistencia eléctrica. úsalo como dirección, no como promesa
+a usual figure ({}%), you have {} days with weight and fat, 6 are needed == una cifra habitual ({}%), tienes {} días con peso y grasa, hacen falta 6
+a usual figure ({}%), your weight moved under 1 kg in that time == una cifra habitual ({}%), tu peso se movió menos de 1 kg en ese tiempo
+a usual figure ({}%), your readings gave {}%, which is too noisy to use == una cifra habitual ({}%), tus lecturas dieron {}%, que es demasiado ruidoso para usarlo
+your own readings ({}%, from {} days) == tus propias lecturas ({}%, de {} días)
+your trend == tu tendencia
+{} (estimate) == {} (estimación)
+{}, {} (estimate) == {}, {} (estimación)
+7-day average == media de 7 días
+goal (at least) == objetivo (mínimo)
+goal == objetivo
+goal {} {} == objetivo {} {}
+burned (watch) == gasto (reloj)
+lean mass == masa magra
+fat mass == masa grasa
+your numbers over time. on its own: an overview. charts: weight, fat, muscle, water, bmr, burned, intake, protein, energy (eaten vs watch), balance, composition. also: weeks (table), top [kcal|protein], project [lose 0.5] (where weight and body fat are heading). gaps are left as gaps == tus números a lo largo del tiempo. a secas: un resumen. gráficas: weight, fat, muscle, water, bmr, burned, intake, protein, energy (comido frente a reloj), balance, composition. también: weeks (tabla), top [kcal|protein], project [lose 0.5] (hacia dónde van el peso y la grasa corporal). los huecos se quedan como huecos
+intake ({} a day) == ingesta ({} al día)
+protein (g a day) == proteína (g al día)
+energy: eaten and spent ({} a day) == energía: comida y gastada ({} al día)
+balance: intake minus the watch ({}) == balance: ingesta menos reloj ({})
+composition ({}) == composición ({})
+weight ({}) and where it is heading == peso ({}) y hacia dónde va
+body fat (%) and where it is heading == grasa corporal (%) y hacia dónde va
+only days with both == solo días con ambos
+fat mass = weight x fat %, on days with both == masa grasa = peso x % de grasa, en días con ambos
+dashed lines are estimates == las líneas discontinuas son estimaciones
+
+# ---------------------------------------------------------------- backup
+~{} days, {} foods, {} meals, {} recipes == {} días, {} alimentos, {} comidas guardadas, {} recetas
+this is not a Waistline backup == esto no es una copia de seguridad de Waistline
+this is not a Waistline backup (no diary or foods in it) == esto no es una copia de seguridad de Waistline (no tiene diario ni alimentos)
+backing up {} and your settings == copiando {} y tus ajustes
+could not write the file. check that the app may use storage == no se pudo escribir el archivo. comprueba que la app pueda usar el almacenamiento
+saved: {} == guardado: {}
+choose where to keep it in the share window that just opened == elige dónde guardarlo en la ventana de compartir que se acaba de abrir
+nothing was produced to save == no se generó nada que guardar
+downloading {} ({}). your browser decides where it goes == descargando {} ({}). tu navegador decide dónde va
+passwords and API keys are left out of the file. the terminal's own history is not part of a backup == las contraseñas y claves de API se dejan fuera del archivo. el historial del propio terminal no forma parte de una copia
+choose a Waistline backup file... == elige un archivo de copia de seguridad de Waistline...
+no file chosen == no se eligió ningún archivo
+that file is not readable as a backup ({}) == ese archivo no se puede leer como copia de seguridad ({})
+~{}: {}, with settings == {}: {}, con ajustes
+~{}: {}, without settings == {}: {}, sin ajustes
+this REPLACES everything you have now ({}) == esto REEMPLAZA todo lo que tienes ahora ({})
+a copy of what you have now was saved to {} == se guardó una copia de lo que tienes ahora en {}
+replace it with the file? y to continue == ¿reemplazarlo con el archivo? y para continuar
+could not save a copy of what you have now first == no se pudo guardar antes una copia de lo que tienes ahora
+replace it anyway, with no copy? type overwrite to continue == ¿reemplazarlo igualmente, sin copia? escribe overwrite para continuar
+no copy of what you have now is made here (a desktop browser cannot write files silently). export first if you want one == aquí no se hace copia de lo que tienes ahora (un navegador de escritorio no puede escribir archivos en silencio). haz antes un export si quieres una
+replace it with the file? type overwrite to continue == ¿reemplazarlo con el archivo? escribe overwrite para continuar
+nothing was changed == no se cambió nada
+imported: {} == importado: {}
+undo was cleared, since it pointed at the old data == se borró el historial de undo, porque apuntaba a datos antiguos
+save all your data as a backup file (same file the regular screen makes). on a phone it opens the share window so you choose where it goes. export csv gives the diary as a spreadsheet == guarda todos tus datos en un archivo de copia de seguridad (el mismo que hace la pantalla normal). en el móvil abre la ventana de compartir para que elijas dónde va. export csv da el diario como hoja de cálculo
+restore from a backup file, including one from the official app. opens the file chooser, shows what is in it, saves a copy of what you have now, and asks before replacing anything == restaura desde un archivo de copia de seguridad, incluida una de la app oficial. abre el selector de archivos, enseña qué contiene, guarda una copia de lo que tienes ahora y pregunta antes de reemplazar nada
+
+# ---------------------------------------------------------------- demo
+demo data is already loaded. demo clear removes it first == los datos de muestra ya están cargados. demo clear los quita primero
+~loaded {} foods, {} meals, {} recipes, {} days of entries ({} items) and body measurements == cargados {} alimentos, {} comidas guardadas, {} recetas, {} días de entradas ({} entradas) y medidas corporales
+skipped, because your own foods differ: {} == omitidos, porque tus propios alimentos difieren: {}
+try: cd diary, cd today, ls, cd ../foods, cd ../meals. demo clear removes it all == prueba: cd diary, cd today, ls, cd ../foods, cd ../meals. demo clear lo quita todo
+~removed {} foods, {} meals, {} recipes, {} diary items and {} demo days == quitados {} alimentos, {} comidas guardadas, {} recetas, {} entradas del diario y {} días de muestra
+{} demo foods stay, because your own meals or recipes use them == se quedan {} alimentos de muestra, porque tus comidas guardadas o recetas los usan
+{} demo foods or recipes are in days you logged, so they were archived instead of deleted == {} alimentos o recetas de muestra están en días que apuntaste, así que se archivaron en vez de borrarse
+sample foods, meals, 14 days of entries and body data for showing the app. clear removes only the sample data == alimentos, comidas guardadas, 14 días de entradas y datos corporales de muestra para enseñar la app. clear quita solo los datos de muestra
+demo data is loaded == los datos de muestra están cargados
+no demo data == no hay datos de muestra
+this adds sample foods, meals, 14 days of entries and body data. your own data stays. continue? (y) == esto añade alimentos, comidas guardadas, 14 días de entradas y datos corporales de muestra. tus datos se quedan. ¿continuar? (y)
+this removes only the sample data. your own data stays. continue? (y) == esto quita solo los datos de muestra. tus datos se quedan. ¿continuar? (y)
+
+# ---------------------------------------------------------------- themes
+the default: near-black with orange == el predeterminado: casi negro con naranja
+pure black, for OLED screens == negro puro, para pantallas OLED
+Solarized, dark == Solarized, oscuro
+Solarized, light == Solarized, claro
+theme <name> switches (it keeps your accent colour). accent <colour> changes just the highlight == theme <nombre> cambia de tema (conserva tu color de resalte). accent <color> cambia solo el resalte
+which one? {} == ¿cuál? {}
+no theme called {}. theme lists them == no hay ningún tema llamado {}. theme los lista
+your accent colour {} is kept. accent default goes back to this theme's own == se conserva tu color de resalte {}. accent default vuelve al del tema
+{} (the theme's own) == {} (el del tema)
+or a hex colour like #ff8800 == o un color hex como #ff8800
+not a colour: {}. use a name ({}) or hex like #ff8800 == no es un color: {}. usa un nombre ({}) o un hex como #ff8800
+this is hard to see on the {} background. accent default undoes it == esto se ve mal sobre el fondo {}. accent default lo deshace
+colour theme: terminal, oled (pure black), solarized-dark, solarized-light, monokai, dracula. on its own it lists them. your accent colour is kept == tema de color: terminal, oled (negro puro), solarized-dark, solarized-light, monokai, dracula. a secas los lista. se conserva tu color de resalte
+the highlight colour (kcal, prompt, cursor, charts): accent orange, accent #ff8800, accent default. works on top of any theme == el color de resalte (kcal, prompt, cursor, gráficas): accent orange, accent #ff8800, accent default. funciona sobre cualquier tema
+
+# ---------------------------------------------------------------- reminder
+daily reminder to weigh yourself, on the phone: a time such as 07:00, or off == recordatorio diario para pesarte, en el móvil: una hora como 07:00, u off
+reminder is a time like 07:00, or off == reminder es una hora como 07:00, u off
+no more reminders == ya no habrá recordatorios
+it rings every day at {}. change the time, or set reminder off, whenever you like == sonará cada día a las {}. cambia la hora, o usa set reminder off, cuando quieras
+a daily reminder to weigh yourself, at a time you choose (rings on the phone) == un recordatorio diario para pesarte, a la hora que elijas (suena en el móvil)
+what time? e.g. 07:00 (Enter skips) == ¿a qué hora? p. ej. 07:00 (Enter para saltar)
+reminders only ring on the phone. the time is saved and starts working there == los recordatorios solo suenan en el móvil. la hora queda guardada y empieza a funcionar allí
+the phone did not allow notifications. allow them for this app in Android settings == el móvil no permitió las notificaciones. permítelas para esta app en los ajustes de Android
+could not schedule the reminder: {} == no se pudo programar el recordatorio: {}
+a list of ingredients can be a recipe (one line in the diary; asks how much it makes) or a saved meal (each ingredient is logged on its own). which one? == una lista de ingredientes puede ser una receta (una línea en el diario; pregunta cuánto rinde) o una comida guardada (cada ingrediente se apunta por separado). ¿cuál quieres?
+recipe == receta
+saved meal == comida guardada

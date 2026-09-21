@@ -36,7 +36,8 @@
 
   <!--CSS-->
   <link rel="stylesheet" href="assets/css/global-styles.css">
-  <link rel="stylesheet" href="activities/diary/views/diary.css">
+  <link rel="stylesheet" href="assets/css/theme-terminal.css">
+  <link rel="stylesheet" href="activities/terminal/views/terminal.css">
 
   <!--Localization-->
   <script src="assets/js/jquery-3.6.0.min.js"></script>
@@ -45,69 +46,12 @@
   <!--HTML entity encoder/decoder-->
   <script src="assets/js/he.js"></script>
 
-  <title>Waistline</title>
+  <title>waistline-cli</title>
 </head>
 
 <body>
 
   <div id="app">
-
-    <!-- Panel -->
-    <div id="app-panel" class="panel panel-left panel-cover panel-init">
-      <div class="list">
-        <ul>
-          <li class="no-chevron">
-            <a href="/statistics/" class="item-link item-content" data-reload-current="true">
-              <div class="item-media"><i class="icon fas fa-chart-area"></i></div>
-              <div class="item-inner" data-localize="statistics.title">Statistics</div>
-            </a>
-          </li>
-
-          <li class="no-chevron">
-            <a href="/diary/" class="item-link item-content" data-reload-current="true">
-              <div class="item-media"><i class="icon far fa-calendar-alt"></i></div>
-              <div class="item-inner" data-localize="diary.title">Diary</div>
-            </a>
-          </li>
-
-          <li class="no-chevron">
-            <a href="/foods-meals-recipes/" class="item-link item-content" data-reload-current="true">
-              <div class="item-media"><i class="icon fas fa-utensils"></i></div>
-              <div class="item-inner" data-localize="foods-meals-recipes.title">Foods, Meals, Recipes</div>
-            </a>
-          </li>
-
-          <li class="no-chevron">
-            <a href="/goals/" class="item-link item-content" data-reload-current="true">
-              <div class="item-media"><i class="icon fas fa-bullseye"></i></div>
-              <div class="item-inner" data-localize="goals.title">Goals</div>
-            </a>
-          </li>
-
-          <li class="no-chevron">
-            <a href="/settings/" class="item-link item-content" data-reload-current="true">
-              <div class="item-media"><i class="icon fas fa-cog"></i></div>
-              <div class="item-inner" data-localize="settings.title">Settings</div>
-            </a>
-          </li>
-
-          <li class="no-chevron">
-            <a href="/about/" class="item-link item-content" data-reload-current="true">
-              <div class="item-media"><i class="icon fas fa-info-circle"></i></div>
-              <div class="item-inner" data-localize="about.title">About</div>
-            </a>
-          </li>
-
-          <!--<li class="no-chevron">
-            <a href="/setup-wizard/" class="item-link item-content" data-reload-current="true">
-              <div class="item-media"><i class="icon fas fa-info-circle"></i></div>
-              <div class="item-inner" data-localize="setup-wizard.title">Setup Wizard - temp</div>
-            </a>
-          </li>-->
-
-        </ul>
-      </div>
-    </div>
 
     <div class="view view-main" id="main-view"></div>
   </div>
@@ -116,31 +60,34 @@
   <script src="assets/framework7/framework7-bundle.min.js"></script>
   <script src="assets/js/db-handler.js" defer></script>
   <script src="assets/js/utils.js" defer></script>
-  <script src="assets/js/chartjs/dist/Chart.bundle.min.js"></script>
-  <script src="assets/js/chartjs-plugin-annotation/chartjs-plugin-annotation.min.js"></script>
   <script src="index.js"></script>
-  <script src="activities/statistics/js/statistics.js"></script>
+  <script src="activities/terminal/js/terminal-i18n.js"></script>
+  <script src="activities/terminal/js/terminal.js"></script>
+  <script src="activities/terminal/js/terminal-diary.js"></script>
+  <script src="activities/terminal/js/terminal-foods.js"></script>
+  <script src="activities/terminal/js/terminal-meals.js"></script>
+  <script src="activities/terminal/js/terminal-recipes.js"></script>
+  <script src="activities/terminal/js/terminal-body.js"></script>
+  <script src="activities/terminal/js/terminal-goals.js"></script>
+  <script src="activities/terminal/js/terminal-plan.js"></script>
+  <script src="activities/terminal/js/terminal-charts.js"></script>
+  <script src="activities/terminal/js/terminal-stats.js"></script>
+  <script src="activities/terminal/js/terminal-backup.js"></script>
+  <script src="activities/terminal/js/terminal-themes.js"></script>
+  <script src="activities/terminal/js/terminal-settings.js"></script>
+  <script src="activities/terminal/js/terminal-reminder.js"></script>
+  <script src="activities/terminal/js/terminal-demo.js"></script>
+  <script src="activities/terminal/js/terminal-onboarding.js"></script>
+  <script src="activities/terminal/js/terminal-i18n-es.js"></script>
+  <script src="activities/terminal/js/terminal-i18n-es-areas.js"></script>
   <script src="activities/goals/js/goals.js"></script>
-  <script src="activities/goals/js/goal-editor.js"></script>
-  <script src="activities/diary/js/diary.js"></script>
-  <script src="activities/diary/js/diary-chart.js"></script>
-  <script src="activities/diary/js/group.js"></script>
   <script src="activities/foods-meals-recipes/js/foods-meals-recipes.js"></script>
-  <script src="activities/foods-meals-recipes/js/food-images.js"></script>
-  <script src="activities/foods-meals-recipes/js/food-editor.js"></script>
   <script src="activities/foodlist/js/open-food-facts.js"></script>
-  <script src="activities/foodlist/js/usda.js"></script>
   <script src="activities/foodlist/js/foodlist.js"></script>
-  <script src="activities/meals/js/meals.js"></script>
-  <script src="activities/meals/js/meal-editor.js"></script>
-  <script src="activities/recipes/js/recipes.js"></script>
-  <script src="activities/recipes/js/recipe-editor.js"></script>
   <script src="activities/settings/js/settings.js"></script>
   <script src="activities/settings/js/nutriments.js"></script>
   <script src="activities/settings/js/body-stats.js"></script>
   <script src="activities/settings/js/foods-categories.js"></script>
-  <script src="activities/settings/js/text-so-speech.js"></script>
-  <script src="activities/setup-wizard/js/setup-wizard.js"></script>
 </body>
 
 </html>

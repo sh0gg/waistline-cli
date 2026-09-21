@@ -126,7 +126,8 @@
     "yellow": "Amarillo",
     "purple": "Morado",
     "eink": "Tinta electrónica",
-    "camino": "Camino de Santiago"
+    "camino": "Camino de Santiago",
+    "terminal": "Terminal"
   },
   "statistics": {
     "title": "Estadísticas",
