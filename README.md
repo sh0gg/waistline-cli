@@ -48,6 +48,16 @@ theme dracula            # change the look
 Commands stay in English on purpose. The text around them is translated: `set lang es` (English and Spanish so far).
 `set reminder 07:00` schedules a daily notification to weigh yourself. `help` lists everything; `tour` is a guided start.
 
+## Getting started
+
+1. Install the APK (see below) and open it. Answer the preference questions and follow the guided `tour` list.
+2. Log your first meal: `+ oats 60g`. See how you are doing with `today`.
+3. When something does not work out, look in the **[user manual](docs/MANUAL.md)** ([Español](docs/MANUAL.es.md)): it
+   explains every command with examples and use cases (scanned products and their portions, splitting a pizza into
+   slices, a watch's `burned` vs `active` energy, dinners that land in *snacks*, moving over from official Waistline...)
+   and a table of common pitfalls.
+4. Coming from Waistline? Export a backup with the official app and use `import` (§9 of the manual).
+
 ## Install
 
 Download the APK from the [Releases](../../releases) page, check its SHA-256, and allow "install unknown apps" for your browser or file

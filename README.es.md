@@ -37,6 +37,15 @@ gráficas se sustituyeron por una terminal. Ambos son software libre bajo la GPL
 Los comandos siguen en inglés a propósito; el texto de alrededor se traduce con `set lang es`. `set reminder 07:00` programa un
 aviso diario para pesarte. `help` lista todo; `tour` es un comienzo guiado.
 
+## Cómo empezar
+
+1. Instala el APK (ver abajo) y ábrelo. Responde las preguntas de preferencias y sigue la lista guiada de `tour`.
+2. Apunta tu primera comida: `+ oats 60g`. Mira cómo vas con `today`.
+3. Cuando algo no te salga, busca en el **[manual de uso](docs/MANUAL.es.md)** ([English](docs/MANUAL.md)): explica cada
+   comando con ejemplos y casos de uso (productos escaneados y sus porciones, repartir una pizza en trozos, `burned` o
+   `active` del reloj, cenas que caen en *snacks*, pasar de Waistline oficial...) y una tabla de trampas frecuentes.
+4. ¿Vienes de Waistline? Exporta una copia con la app oficial y usa `import` (§9 del manual).
+
 ## Instalar
 
 Descarga el APK de la página de [Releases](../../releases), comprueba su SHA-256 y permite «instalar apps desconocidas» a tu
